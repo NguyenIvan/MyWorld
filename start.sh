@@ -11,6 +11,4 @@ export REACT_APP_FT_CONTRACT=${FT_CONTRACT}
 export REACT_APP_FUSD_CONTRACT=${FUSD_CONTRACT}
 export REACT_APP_DAPPY_CONTRACT=${DAPPY_CONTRACT}
 
-# pm2 start npm -- start
-# npm run start > /dev/null 2>&1 &
 npm run start

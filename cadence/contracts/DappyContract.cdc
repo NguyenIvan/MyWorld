@@ -1,6 +1,4 @@
-
 import FungibleToken from "./FungibleToken.cdc"
-
 pub contract DappyContract {
   access(self) var templates: {UInt32: Template}
   access(self) var families: @{UInt32: Family}
@@ -17,7 +15,7 @@ pub contract DappyContract {
     pub let templateID: UInt32
     pub let dna: String
     pub let name: String
-    pub let price: UFix64
+    pub let price: UFix64 
 
     init(templateID: UInt32, dna: String, name: String) {
       self.templateID = templateID
@@ -309,7 +307,7 @@ pub contract DappyContract {
 
   init() {
     self.templates = {}
-    self.totalDappies = 0
+    self.totalDappies = 0 
     self.nextTemplateID = 1
     self.nextFamilyID = 1
     self.CollectionStoragePath = /storage/DappyCollection
@@ -320,3 +318,14 @@ pub contract DappyContract {
   }
 
 }
+
+
+
+/*
+DappyContract most important piece is (R) Dappy. Dappy is minted only on a template, which consist of price, dna and name. The length of a dna decide the price of the Dappy. How ever if the Dappy is minted from a (R) Family, its price is up to the family preset price.
+Admin has all the rights to the objects in DappyContract and is exposed outside, especially with Template and Family.
+Collection is exposed through /public/DappyCollection/Public expose basic ops: deposit, withdraw, list dappies.
+Each Dappy has an ID (incremental when created, in tandem with dappyTotal in the contract) and data from which template it was created from.
+There is a minor struct FamilyReport that help add an abstract layer between Family objects and public (could be replace with an Interface easily).
+*/
+ 

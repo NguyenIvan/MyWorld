@@ -203,3 +203,11 @@ pub contract interface FungibleToken {
         }
     }
 }
+
+/*
+(I) FungibleToken is an interface the all Token on flow chain should be implemented. It provide public functions for:
+- Total supply and balance
+- (R) Vault
+- Deposit and receive a vault
+- Events for the changing token (init, withdraw, deposited). Threre should be "burnt" event, too?
+*/

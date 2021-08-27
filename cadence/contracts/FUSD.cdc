@@ -206,3 +206,6 @@ pub contract FUSD: FungibleToken {
     }
 }
  
+/*
+FUSD is an example of NonFungible token implemented.
+ */
