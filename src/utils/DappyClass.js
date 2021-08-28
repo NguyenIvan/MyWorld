@@ -11,7 +11,7 @@ class DappyClass {
   }
 
   get rarity() {
-    switch (parseDNA(this.dna).length - 1) {
+    switch (parseDNA(this.dna).length - 1) { /* Rarity based on the length of dna stripes */
       case COMMON.stripes:
         return `${COMMON.emoji} ${COMMON.name}`
       case RARE.stripes:
@@ -28,5 +28,5 @@ class DappyClass {
   }
 }
 
-export default DappyClass
+export default DappyClass /* Export default means only one object is export, so when importing we don't need to use curly braces */
 

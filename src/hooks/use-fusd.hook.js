@@ -10,7 +10,7 @@ export default function useFUSD(user) {
     loading: true,
     error: false,
     data: null
-  })
+  }) /* This object use defaultReducer */
   const { addTx } = useTxs()
 
   useEffect(() => {

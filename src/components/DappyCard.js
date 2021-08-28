@@ -34,7 +34,8 @@ export default function DappyCard({ dappy, store, designer }) {
       <i className="ri-shopping-cart-fill btn-icon"></i> {parseInt(price)} FUSD
     </div>
   )
-
+  
+  /* Check: if type is Dappy, render Dappy with dna, if NOT, render a pack image */
   return (
     <div className="dappy-card__border">
       <div className={`dappy-card__wrapper ${owned && store && "faded"}`} >

@@ -6,7 +6,7 @@ import Header from '../components/Header'
 import ErrorLoadingRenderer from '../components/ErrorLoadingRenderer'
 
 export default function Dappies() {
-  const { data: dappyTemplates, loading, error } = useDappyTemplates()
+  const { data: dappyTemplates, loading, error } = useDappyTemplates() /* Change the name of prop from data to dappyTemplates */
 
   return (
     <>

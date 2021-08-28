@@ -34,11 +34,11 @@ const TEST_FAMILY = {
   familyID: 1
 }
 
-describe("MyWorld", () => {
+describe("Dappy", () => {
   beforeEach(async () => {
     const basePath = path.resolve(__dirname, "../");
     const port = 8080;
-    init(basePath, port);
+    init(basePath, port); /* init from flow-js-testing */
     return emulator.start(port, false);
   });
 

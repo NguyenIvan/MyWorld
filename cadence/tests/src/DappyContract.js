@@ -9,7 +9,8 @@ import {
 export const getDappyAdminAddress = async () => getAccountAddress("DappyAdmin")
 
 export const deployDappyContract = async () => {
-  const DappyAdmin = await getAccountAddress("DappyAdmin")
+  // const DappyAdmin = await getAccountAddress("DappyAdmin")
+  const DappyAdmin = await getDappyAdminAddress()
   await mintFlow(DappyAdmin, "10.0")
   const addressMap = { FungibleToken: "0xee82856bf20e2aa6" }
   await deployContractByName({ to: DappyAdmin, name: "DappyContract", addressMap })
