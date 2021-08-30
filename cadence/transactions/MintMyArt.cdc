@@ -19,3 +19,7 @@ transaction(name: String, price: UFix64) {
     self.receiverReference.deposit(token: <-newMyArt)
   }
 }
+
+/*
+The Contract doesn't care anything else but a collection ref and a vault, which is withdraw from AuthAccount's FUSD Vault ref. If the two conditions are satisfied, it will mint an Art, the only extra piece of code this transaction do is to deposit that Art to the above collection ref. 
+ */

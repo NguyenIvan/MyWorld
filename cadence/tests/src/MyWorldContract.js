@@ -6,11 +6,16 @@ import {
   executeScript
 } from "flow-js-testing"
 
-export const deployMyWorldContract = async() => {
-  const MyWorldAdmin = await getAccountAddress("MyWorldAdmin")
-  await mintFlow(MyWorldAdmin, "10.0")
+export const TEST_MYART = {
+  name: "Panda Dappy",
+  price: "7.00000000"
+}
+
+export const deployMyWorldContract = async(accountAddress) => {
+  const account = accountAddress ? accountAddress : await getAccountAddress("MyWorldAdmin")
+  await mintFlow(account, "10.0")
   const addressMap = {FungibleToken: "0xee82856bf20e2aa6"}
-  await deployContractByName({ to:MyWorldAdmin, name: "MyWorldContract", addressMap})
+  await deployContractByName({ to:account, name: "MyWorldContract", addressMap})
 }
 
 export const createMyArtCollection = async (recipient) => {

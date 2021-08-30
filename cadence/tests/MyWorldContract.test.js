@@ -6,12 +6,20 @@ import {
   mintFlow,
   getAccountAddress
 } from "flow-js-testing"
+
+import {
+  deployMyMarketContract,
+  createSaleCollection
+} from "./src/MyMarketplaceContract";
+
 import {
   deployMyWorldContract,
   createMyArtCollection,
   mintMyArt,
-  listUserMyArts
+  listUserMyArts,
 } from "./src/MyWorldContract";
+
+
 import { fundAccountWithFUSD } from "./src/FUSD";
 
 const TEST_MYART = {
@@ -43,11 +51,11 @@ describe("MyWorld", () => {
     expect(res).toEqual(0)
   });
 
-  it("Should mint FUSD", async () => {
+  it("should mint FUSD", async () => {
     const recipient = await getAccountAddress("MyArtRecipient")
     const balance = await fundAccountWithFUSD(recipient, "100.00")
     expect(balance).toBe("100.00000000")
-  })
+  });
 
   
   it("Should mint a MyArt", async () => {
@@ -59,5 +67,7 @@ describe("MyWorld", () => {
     await mintMyArt(recipient, TEST_MYART)
     const userMyArts = await listUserMyArts(recipient)
     expect(userMyArts['1']).toMatchObject(TEST_MYART)
-  })
+  });
+
 })
+ 
