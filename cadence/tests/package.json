@@ -4,7 +4,7 @@
   "description": "",
   "main": "",
   "scripts": {
-    "test": "jest --runInBand"
+    "test": "jest --runInBand --verbose"
   },
   "keywords": [],
   "author": "",

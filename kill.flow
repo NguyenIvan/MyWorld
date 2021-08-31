@@ -1,0 +1,3 @@
+#!/bin/bash
+# killall flow
+docker-compose -f /code/wallet/docker-compose.yml stop

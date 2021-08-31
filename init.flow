@@ -1,0 +1,8 @@
+#!/bin/bash
+# flow emulator --token-supply 1000000000.0 & 1>flow.log 2>&1
+# sleep 2
+docker-compose -f /code/wallet/docker-compose.yml  up -d
+sleep 2
+flow project deploy --network=emulator
+sleep 2
+flow accounts get f8d6e0586b0a20c7 |grep Contract

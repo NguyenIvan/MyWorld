@@ -17,7 +17,7 @@ export default function useCollection(user) {
       try {
         let res = await query({
           cadence: CHECK_COLLECTION,
-          args: (arg, t) => [arg(user?.addr, t.Address)]
+          args: (arg, t) => [arg(user?.addr, t.Address)] /* this is where signers are passed as an argument */
         })
         setCollection(res)
         setLoading(false)

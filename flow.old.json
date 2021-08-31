@@ -6,8 +6,7 @@
 		}
 	},
 	"contracts": {
-		"MyWorldContract": "./cadence/contracts/MyWorldContract.cdc",
-		"MyMarketplaceContract": "./cadence/contracts/MyMarketplaceContract.cdc",
+		"DappyContract": "./cadence/contracts/DappyContract.cdc",
 		"FUSD": {
 			"source": "./cadence/contracts/FUSD.cdc",
 			"aliases": {
@@ -29,20 +28,9 @@
 	},
 	"accounts": {
 		"emulator-account": {
-			"address": "0xf8d6e0586b0a20c7",
-			"key": "84f82df6790f07b281adb5bbc848bd6298a2de67f94bdfac7a400d5a1b893de5"
-		},
-		"MyWorldAdmin": {
-			"address": "0xf4e0f64e3ff7415d",
-			"key": "97410e191ba55eacf5b470699749a27f3653ff7afe9a7d390ab785033b6b2b76"
+			"address": "f8d6e0586b0a20c7",
+			"key": "ae1b44c0f5e8f6992ef2348898a35e50a8b0b9684000da8b1dade1b3bcd6ebee"
 		}
 	},
-	"deployments": {
-		"testnet": {
-			"MyWorldAdmin": ["MyWorldContract", "MyMarketplaceContract"]
-		},
-		"emulator": {
-			"emulator-account": ["MyWorldContract", "MyMarketplaceContract"]
-		}
-	}
+	"deployments": {}
 }
