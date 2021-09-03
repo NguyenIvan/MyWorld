@@ -3,9 +3,9 @@ import { useHistory } from 'react-router-dom'
 
 import { useUser } from '../providers/UserProvider'
 import Dappy from './Dappy'
-import "./DappyCard.css"
+import "./MyArtCard.css"
 
-export default function DappyCard({ dappy, store, designer }) {
+export default function MyArtCard({ dappy, store, designer }) {
   const { userDappies, mintDappy } = useUser()
   const history = useHistory()
   const { id, dna, image, name, rarity, price, type, serialNumber } = dappy

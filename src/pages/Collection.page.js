@@ -1,8 +1,7 @@
 import React from 'react'
-import DappyList from '../components/DappyList'
+import MyArtList from '../components/MyArtList'
 import Header from '../components/Header'
 import { useUser } from '../providers/UserProvider'
-
 
 export default function Collection() {
   const { collection, createCollection, deleteCollection, userDappies } = useUser()
@@ -10,15 +9,15 @@ export default function Collection() {
   return (
     <>
       <Header
-        title={<>My<span className="highlight">Dappies</span></>}
-        subtitle={<>Here are the <span className="highlight">Dappies and Packs</span> you have collected</>}
+        title={<>MyWorld <span className="highlight">Collection</span></>}
+        subtitle={<>Here are your <span className="highlight">Arts</span> collection</>}
       />
 
       {!collection ?
-        <div className="btn btn-round" onClick={() => createCollection()}>Enable Collection</div> :
+        <div className="btn btn-bg rounded" onClick={() => createCollection()}>Enable Collection</div> :
         <>
-          <DappyList dappies={userDappies} />
-          <div className="btn btn-round" onClick={() => deleteCollection()}>Delete Collection</div>
+          <MyArtList myarts={userDappies} />
+          <div className="btn btn-bg rounded" onClick={() => deleteCollection()}>Delete Collection</div>
         </>
       }
     </>

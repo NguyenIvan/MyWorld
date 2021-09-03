@@ -17,8 +17,7 @@
 		"FungibleToken": {
 			"source": "./cadence/contracts/FungibleToken.cdc",
 			"aliases": {
-				"testnet": "9a0766d93b6608b7",
-				"emulator": "ee82856bf20e2aa6"
+				"testnet": "9a0766d93b6608b7"
 			}
 		}
 	},
@@ -42,7 +41,7 @@
 			"MyWorldAdmin": ["MyWorldContract", "MyMarketplaceContract"]
 		},
 		"emulator": {
-			"emulator-account": ["MyWorldContract", "MyMarketplaceContract"]
+			"emulator-account": ["MyWorldContract", "MyMarketplaceContract", "FungibleToken", "FUSD"]
 		}
 	}
 }

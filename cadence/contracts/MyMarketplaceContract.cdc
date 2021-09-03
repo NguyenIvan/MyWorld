@@ -31,11 +31,14 @@ pub contract MyMarketplaceContract {
     pub fun purchase(tokenID: UInt64, recipient: &AnyResource{MyWorldContract.Receiver}, buyTokens: @FungibleToken.Vault)
     pub fun idPrice(tokenID: UInt64): UFix64?
     pub fun getIDs(): [UInt64]
+    pub fun getCollection(): {UInt64: MyWorldContract.MyArtData}
   }
 
   pub resource SaleCollection: SalePublic {
 
     pub var forSale: @{UInt64: MyWorldContract.MyArt}
+
+    pub var collection: {UInt64: MyWorldContract.MyArtData}
 
     pub var wantPrices: {UInt64: UFix64}
 
@@ -45,10 +48,12 @@ pub contract MyMarketplaceContract {
       self.forSale <- {}
       self.ownerVault = vault
       self.wantPrices = {}  
+      self.collection = {}
     }
 
     pub fun withdraw(tokenID: UInt64): @MyWorldContract.MyArt {
       self.wantPrices.remove(key: tokenID)
+      self.collection.remove(key: tokenID)
       let token <- self.forSale.remove(key:tokenID) ?? panic("missing MyArt NFT")
       return <- token
     }
@@ -56,6 +61,7 @@ pub contract MyMarketplaceContract {
     pub fun listForSale(token: @MyWorldContract.MyArt, wantPrice: UFix64) {
       let id = token.id
       self.wantPrices[id] = wantPrice
+      self.collection[id ] = token.data
       let oldToken <- self.forSale[id] <- token 
       destroy  oldToken
       emit ForSale(id: id, wantPrice: wantPrice)
@@ -76,6 +82,7 @@ pub contract MyMarketplaceContract {
 
         let price = self.wantPrices[tokenID]!
         self.wantPrices[tokenID] = nil
+        self.collection[tokenID] = nil
         let vaultRef = self.ownerVault.borrow()
           ?? panic("Could not borrow reference to owner token vault")
         vaultRef.deposit(from: <-buyTokens)
@@ -89,6 +96,10 @@ pub contract MyMarketplaceContract {
 
     pub fun getIDs(): [UInt64] {
         return self.forSale.keys
+    }
+
+    pub fun getCollection(): {UInt64: MyWorldContract.MyArtData} {
+      return self.collection    
     }
 
     destroy() {

@@ -34,7 +34,6 @@ export default function useCollection(user) {
     let res = await mutate({
       cadence: CREATE_COLLECTION,
       limit: 55
-
     })
     addTx(res)
     await tx(res).onceSealed()

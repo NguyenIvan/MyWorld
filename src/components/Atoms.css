@@ -9,6 +9,7 @@
   padding: 0.5rem 1rem;
   mix-blend-mode: screen; /* This makes the cutout text possible */
   color: black;
+  display: inline-block;
 }
 
 .btn-bordered {

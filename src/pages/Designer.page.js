@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 
 import { calculatePrice, createRandomDappies } from '../utils/dappies.utils'
 import DappyClass from '../utils/DappyClass'
-import DappyList from '../components/DappyList'
+import MyArtList from '../components/MyArtList'
 import Header from '../components/Header'
 import "./Designer.page.css"
 
@@ -82,7 +82,7 @@ export default function Designer() {
         </div>
         <button onClick={(e) => randomize(e)}>Full Random</button>
       </form>
-      <DappyList dappies={dappies} designer />
+      <MyArtList dappies={dappies} designer />
     </div>
   )
 }

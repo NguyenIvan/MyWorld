@@ -16,7 +16,7 @@ export default function useDappyPacks() {
     error: false,
     data: []
   })
-  const { collection, batchAddDappies, getFUSDBalance } = useUser()
+  const { collection, getFUSDBalance } = useUser()
   const { runningTxs, addTx } = useTxs()
 
   useEffect(() => {
@@ -81,7 +81,6 @@ export default function useDappyPacks() {
     addTx(res)
     await tx(res).onceSealed()
     await getFUSDBalance()
-    batchAddDappies(dappiesToMint)
   }
 
 

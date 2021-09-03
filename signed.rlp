@@ -1,0 +1,17 @@
+ID		7a9441de61bdadf1a8e59c88764fa3c9cd789dcad94da136ea62fd8100bf2fee
+Payer		f8d6e0586b0a20c7
+Authorizers	[f8d6e0586b0a20c7]
+
+Proposal Key:	
+    Address	f8d6e0586b0a20c7
+    Index	0
+    Sequence	5
+
+No Payload Signatures
+
+Envelope Signature 0: f8d6e0586b0a20c7
+Signatures (minimized, use --include signatures)
+
+Code (hidden, use --include code)
+
+Payload (hidden, use --include payload)

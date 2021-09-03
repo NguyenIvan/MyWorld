@@ -6,7 +6,7 @@ import './AccountDetails.css'
 
 export default function Wallet() {
   const { user, logOut } = useAuth()
-  const { balance, createFUSDVault } = useUser()
+  const { balance, createFUSDVault, testScript } = useUser()
 
   return (
     <div className="wallet__popup">
@@ -23,6 +23,7 @@ export default function Wallet() {
         </div>
       }
       <div className="btn btn-small" onClick={() => logOut()}>👋 Logout</div>
+      <div onClick={() => testScript()} className="btn btn-small">Test Script</div>
     </div>
   )
 }

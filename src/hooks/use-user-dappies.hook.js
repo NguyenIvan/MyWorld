@@ -1,46 +1,49 @@
 import { useEffect, useReducer } from 'react'
 import { mutate, query, tx } from '@onflow/fcl'
 
-import { LIST_USER_DAPPIES } from '../flow/list-user-dappies.script'
+import { LIST_USER_MYARTS } from '../flow/list-user-myarts.script'
 import { MINT_DAPPY } from '../flow/mint-dappy.tx'
+import { MINT_MYART } from '../flow/mint-myart.tx'
 import { userDappyReducer } from '../reducer/userDappyReducer'
 import { useTxs } from '../providers/TxProvider'
 import DappyClass from '../utils/DappyClass'
+import MyArtClass from '../utils/MyArtClass'
 
-export default function useUserDappies(user, collection, getFUSDBalance) { /* Stateful function  to get methods and properties of user */
+export default function useUserMyArts(user, collection, getFUSDBalance) { /* Stateful function  to get methods and properties of user */
   const [state, dispatch] = useReducer(userDappyReducer, {
     loading: false,
     error: false,
-    data: []
-  }) /* This dict is the stateful object. Each object has a reducer to keep state . This object use userDappyReducer */
+    data: [] // data will be renamed to userDappies
+  })
   const { addTx, runningTxs } = useTxs()
 
   useEffect(() => { /* useEffect is use as a side effect after render or update of a component. It is used in replacement for DidMount and DidUpdate */
-    const fetchUserDappies = async () => {
+    const fetchMyArts = async () => {
       dispatch({ type: 'PROCESSING' }) /* Dispatch is use to update statful object */
       try {
         let res = await query({
-          cadence: LIST_USER_DAPPIES, /*Now it's the call to cadence to get list of dappies */
+          cadence: LIST_USER_MYARTS, /*Now it's the call to cadence to get list of dappies */
           args: (arg, t) => [arg(user?.addr, t.Address)]
         })
-        let mappedDappies = [] /* and push them to an array of DappyClass*/
 
-        for (let key in res) {
-          const element = res[key]
-          let dappy = new DappyClass(element.templateID, element.dna, element.name, element.price, key)
-          mappedDappies.push(dappy)
-        }
+        // fix dna
+        let myarts = Object.keys(res).map(key => {
+          return new MyArtClass(key, res[key].name, res[key].price) // TODO: should be wantPrice, remove bellow
+        })
 
-        dispatch({ type: 'SUCCESS', payload: mappedDappies })
+        dispatch({ type: 'SUCCESS', payload: myarts })
       } catch (err) {
         dispatch({ type: 'ERROR' })
       }
     }
-    fetchUserDappies()
+    fetchMyArts()
     //eslint-disable-next-line
   }, [])
 
-  const mintDappy = async (templateID, amount) => {  /* These functions are ways to change the stateful object */
+  const listForSale = async (id) => {
+    
+  }
+  const mintMyArt = async (name, price) => {  /* These functions are ways to change the stateful object */
     if (!collection) {
       alert("You need to enable the collection first. Go to the tab Collection")
       return
@@ -50,57 +53,63 @@ export default function useUserDappies(user, collection, getFUSDBalance) { /* St
       return
     }
     try {
-      let res = await mutate({ /* What is mutate ?*/
-        cadence: MINT_DAPPY,
+      let res = await mutate({
+        cadence: MINT_MYART,
         limit: 55,
-        args: (arg, t) => [arg(templateID, t.UInt32), arg(amount, t.UFix64)] /* a function of (a function, a type dict) */
+        args: (arg, t) => [arg(name, t.String), arg(price, t.UFix64)]
       })
       addTx(res)
       await tx(res).onceSealed()
-      await addDappy(templateID)
+      /* TODO: should update collection here */
       await getFUSDBalance()
-    } catch (error) {
+    }
+    catch (error) {
       console.log(error)
     }
   }
 
-  const addDappy = async (templateID) => { /* Only called after a dappy is minted */
+  const addDappy = async (id) => { /* Only called after a MyArt is minted */
     try {
       let res = await query({
-        cadence: LIST_USER_DAPPIES,
+        cadence: LIST_USER_MYARTS,
         args: (arg, t) => [arg(user?.addr, t.Address)]
       })
-      const dappies = Object.values(res)
-      const dappy = dappies.find(d => d?.templateID === templateID) /* Strict operand */
-      const newDappy = new DappyClass(dappy.templateID, dappy.dna, dappy.name)
-      dispatch({ type: 'ADD', payload: newDappy })
+      const art = res[id]
+      const dna = "FF5A9D.FFE922.60C5E5.0"
+      const newArt = new DappyClass(art.id, dna, art.name, art.price)
+      dispatch({ type: 'ADD', payload: newArt })
     } catch (err) {
       console.log(err)
     }
   }
 
-  const batchAddDappies = async (dappies) => { /* Never called */
-    try {
-      let res = await query({
-        cadence: LIST_USER_DAPPIES,
-        args: (arg, t) => [arg(user?.addr, t.Address)]
-      })
-      const allDappies = Object.values(res)
-      const dappyToAdd = allDappies.filter(d => dappies.includes(d?.templateID))
-      const newDappies = dappyToAdd.map(d => new DappyClass(d.templateID, d.dna, d.name))
-      for (let index = 0; index < newDappies.length; index++) {
-        const element = newDappies[index];
-        dispatch({ type: 'ADD', payload: element })
-      }
-    } catch (err) {
-      console.log(err)
-    }
+  const testScript = async () => {
+    const script =
+      `import MyWorldContract from 0xMyWorld
+
+    pub fun main(addr: Address): {UInt64: MyWorldContract.MyArtData}? {
+      let account = getAccount(addr)
+      
+      if let ref = account.getCapability<&{MyWorldContract.CollectionPublic}>(MyWorldContract.CollectionPublicPath)
+                  .borrow() {
+                    let myArts = ref.listMyArts()
+                    return myArts
+                  }
+      
+      return {}
+    }`
+    let res = await query({
+      cadence: script, /*Now it's the call to cadence to get list of dappies */
+      args: (arg, t) => [arg("0x179b6b1cb6755e31", t.Address)]
+    })
+    console.log(res)
   }
 
   return {
     ...state,
-    mintDappy,
+    listForSale,
+    mintMyArt,
     addDappy,
-    batchAddDappies
+    testScript
   }
 }

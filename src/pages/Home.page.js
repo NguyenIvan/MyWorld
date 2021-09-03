@@ -11,7 +11,9 @@ export default function Home() {
       <Header
         title={<><span className="highlight">My</span>World</>}
         subtitle={<>An NFT gallery of <span className="highlight">arts and music</span> for autism community</>}
-      />
+
+      >
+      </Header>
       <img className="header-image"
         alt="Header"
         onClick={() => history.push("/packs")}

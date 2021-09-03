@@ -8,13 +8,3 @@ pub fun main(address: Address): Int {
     .borrow() ?? panic("Cannot borrow reference")
   return saleRef.getIDs().length
 }
-
-
-// pub fun listMyArts(): {UInt64: MyArtData} {
-//       var myArts: {UInt64: MyArtData} = {}
-//       for key in self.ownedMyArts.keys {
-//         let el = &self.ownedMyArts[key] as &MyArt
-//         myArts.insert(key: el.id, el.data)
-//       }
-//       return myArts
-//     }
