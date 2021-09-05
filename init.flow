@@ -1,8 +1,16 @@
 #!/bin/bash
 # flow emulator --token-supply 1000000000.0 & 1>flow.log 2>&1
 # sleep 2
+echo Starting emulator and wallet-dev services
 docker-compose -f /code/wallet/docker-compose.yml  up -d
 sleep 2
+echo Deploying flow project with default addresses to emulator chain
 flow project deploy --network=emulator
 sleep 2
+echo List all accounts
 flow accounts get f8d6e0586b0a20c7 |grep Contract
+echo Create FUSD Minter for service account
+flow transactions send cadence/transactions/CreateFUSDMinter.cdc
+sleep 2
+echo "Send 10,000 FUSD for Account A (0x179b6b1cb6755e31)"
+flow transactions send cadence/transactions/MintFUSD.cdc  0x179b6b1cb6755e31  10000.00

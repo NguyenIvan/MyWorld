@@ -1,4 +1,3 @@
-import React from 'react'
 
 const importAll = (r)  => {
     return r.keys().map(r)

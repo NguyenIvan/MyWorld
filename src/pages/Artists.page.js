@@ -6,7 +6,7 @@ import useDappyPacks from '../hooks/use-dappy-packs.hook'
 
 
 export default function Artists() {
-  const { loading, error, data: packs } = useDappyPacks()
+  const { loading, error } = useDappyPacks()
   return (
     <>
       <Header

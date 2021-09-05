@@ -1,7 +1,5 @@
 import { useEffect, useState } from 'react'
 import * as fcl from "@onflow/fcl"
-import fs from 'fs'
-import path from 'path'
 export default function useCurrentUser() {
   const [user, setUser] = useState()
 

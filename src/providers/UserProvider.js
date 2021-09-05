@@ -1,6 +1,7 @@
 import React, { createContext, useContext } from 'react'
 
-import useUserMyArts from '../hooks/use-user-dappies.hook'
+import useUserMyArts from '../hooks/use-user-myarts.hook'
+import useGallery from '../hooks/use-gallery.hook'
 import useCollection from '../hooks/use-collection.hook'
 import useFUSD from '../hooks/use-fusd.hook'
 import { useAuth } from './AuthProvider'
@@ -11,15 +12,15 @@ export default function UserProvider({ children }) {
   const { user } = useAuth()
   const { collection, createCollection, deleteCollection } = useCollection(user)
   const { data: balance, createFUSDVault, getFUSDBalance } = useFUSD(user)
-  const { data: userDappies, addDappy, listForSale, mintMyArt, testScript } = useUserMyArts(user, collection, getFUSDBalance)
-
+  const { data: userDappies, putForSale, mintMyArt, testScript } = useUserMyArts(user, collection, getFUSDBalance)
+  const { data: saleItems } = useGallery()
   return (
     <UserContext.Provider
       value={{
+        saleItems,
         userDappies,
-        listForSale,
+        putForSale,
         mintMyArt,
-        addDappy,
         collection,
         createCollection,
         deleteCollection,

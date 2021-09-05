@@ -50,3 +50,8 @@ export const fundAccountWithFUSD = async (recipient, amount) => {
   const balance = await getFUSDBalance(recipient)
   return balance
 }
+
+export const fundAccountWithFUSDFast = async (recipient, amount) => {
+  await createFUSDVault(recipient)
+  await mintFUSD(recipient, amount)
+}

@@ -1,5 +1,6 @@
-import MyMarketplaceContract from "../contracts/MyMarketplaceContract.cdc"
-import MyWorldContract from "../contracts/MyWorldContract.cdc"
+export const PUT_MYART_FOR_SALE = `
+import MyWorldContract from 0xMyWorld
+import MyMarketplaceContract from 0xMyMarketplace
 
 transaction(myWorldAdmin: Address, myArtId: UInt64, wantPrice: UFix64) {
 
@@ -33,3 +34,4 @@ transaction(myWorldAdmin: Address, myArtId: UInt64, wantPrice: UFix64) {
     }
     
 }
+`

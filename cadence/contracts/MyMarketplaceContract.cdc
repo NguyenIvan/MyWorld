@@ -32,6 +32,7 @@ pub contract MyMarketplaceContract {
     pub fun idPrice(tokenID: UInt64): UFix64?
     pub fun getIDs(): [UInt64]
     pub fun getCollection(): {UInt64: MyWorldContract.MyArtData}
+    pub fun putForSale(token: @MyWorldContract.MyArt, wantPrice: UFix64)
   }
 
   pub resource SaleCollection: SalePublic {
@@ -58,7 +59,7 @@ pub contract MyMarketplaceContract {
       return <- token
     }
 
-    pub fun listForSale(token: @MyWorldContract.MyArt, wantPrice: UFix64) {
+    pub fun putForSale(token: @MyWorldContract.MyArt, wantPrice: UFix64) {
       let id = token.id
       self.wantPrices[id] = wantPrice
       self.collection[id ] = token.data

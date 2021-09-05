@@ -1,5 +1,5 @@
 export const LIST_SALE_COLLECTION = `
-    import MyMarketplaceContract from 0xMyWorld
+    import MyMarketplaceContract from 0xMyMarketplace
     import MyWorldContract from 0xMyWorld
     
     pub fun main(address: Address): {UInt64: MyWorldContract.MyArtData} {

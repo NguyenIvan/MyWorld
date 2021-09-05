@@ -37,7 +37,7 @@ export default function MyArtForm() {
                     <label>Price</label>
                     <input type="number" step=".01" {...bindPrice} />
                 </div>
-                <div className="myart__form__item " designer__form__item>
+                <div className="myart__form__item designer__form__item">
                     <input type="submit" value="Submit" />
                 </div>
             </div>

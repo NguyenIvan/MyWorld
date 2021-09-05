@@ -2,11 +2,10 @@ import { useEffect, useReducer } from 'react'
 import { mutate, query, tx } from '@onflow/fcl'
 
 import { LIST_USER_MYARTS } from '../flow/list-user-myarts.script'
-import { MINT_DAPPY } from '../flow/mint-dappy.tx'
+import { PUT_MYART_FOR_SALE } from '../flow/put-myart-for-sale.tx'
 import { MINT_MYART } from '../flow/mint-myart.tx'
 import { userDappyReducer } from '../reducer/userDappyReducer'
 import { useTxs } from '../providers/TxProvider'
-import DappyClass from '../utils/DappyClass'
 import MyArtClass from '../utils/MyArtClass'
 
 export default function useUserMyArts(user, collection, getFUSDBalance) { /* Stateful function  to get methods and properties of user */
@@ -40,8 +39,28 @@ export default function useUserMyArts(user, collection, getFUSDBalance) { /* Sta
     //eslint-disable-next-line
   }, [])
 
-  const listForSale = async (id) => {
-    
+  const putForSale = async (id, price) => {
+    if (runningTxs) {
+      alert("Transactions are still running. Please wait for them to finish first.")
+      return
+    }
+    try  {
+      const wantPrice = parseFloat(price).toFixed(8)
+      const adminAddress =  process.env.REACT_APP_MYMARKETPLACE_CONTRACT
+      const artId = parseInt(id)
+      let res = await mutate({
+        cadence: PUT_MYART_FOR_SALE,
+        limit: 55,
+        args: (arg, t) => [arg(adminAddress, t.Address), arg(artId, t.UInt64), arg(wantPrice, t.UFix64)]
+      })
+      addTx(res)
+      await tx(res).onceSealed()
+      await getFUSDBalance()
+    }
+    catch (error) {
+      console.log(error)
+    }
+  
   }
   const mintMyArt = async (name, price) => {  /* These functions are ways to change the stateful object */
     if (!collection) {
@@ -68,48 +87,22 @@ export default function useUserMyArts(user, collection, getFUSDBalance) { /* Sta
     }
   }
 
-  const addDappy = async (id) => { /* Only called after a MyArt is minted */
-    try {
-      let res = await query({
-        cadence: LIST_USER_MYARTS,
-        args: (arg, t) => [arg(user?.addr, t.Address)]
-      })
-      const art = res[id]
-      const dna = "FF5A9D.FFE922.60C5E5.0"
-      const newArt = new DappyClass(art.id, dna, art.name, art.price)
-      dispatch({ type: 'ADD', payload: newArt })
-    } catch (err) {
-      console.log(err)
-    }
-  }
-
   const testScript = async () => {
-    const script =
-      `import MyWorldContract from 0xMyWorld
-
-    pub fun main(addr: Address): {UInt64: MyWorldContract.MyArtData}? {
-      let account = getAccount(addr)
-      
-      if let ref = account.getCapability<&{MyWorldContract.CollectionPublic}>(MyWorldContract.CollectionPublicPath)
-                  .borrow() {
-                    let myArts = ref.listMyArts()
-                    return myArts
-                  }
-      
-      return {}
-    }`
+    const script =`
+      pub fun main(): AnyStruct {
+        return true
+      }
+    `
     let res = await query({
-      cadence: script, /*Now it's the call to cadence to get list of dappies */
-      args: (arg, t) => [arg("0x179b6b1cb6755e31", t.Address)]
+      cadence: script
     })
     console.log(res)
   }
 
   return {
     ...state,
-    listForSale,
+    putForSale,
     mintMyArt,
-    addDappy,
     testScript
   }
 }
