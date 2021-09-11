@@ -3,6 +3,7 @@ import { BrowserRouter } from 'react-router-dom'
 import UserProvider from "./UserProvider"
 import TxProvider from './TxProvider'
 import AuthProvider from './AuthProvider'
+import StorageProvider from './StorageProvider'
 
 export default function Providers({ children }) {
   return (
@@ -10,9 +11,11 @@ export default function Providers({ children }) {
       <AuthProvider>
         <TxProvider>
           <UserProvider>
-            <div className="app">
-              {children}
-            </div>
+            <StorageProvider>
+              <div className="app">
+                {children}
+              </div>
+            </StorageProvider>
           </UserProvider>
         </TxProvider>
       </AuthProvider>

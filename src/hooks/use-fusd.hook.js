@@ -45,6 +45,7 @@ export default function useFUSD(user) {
       addTx(transaction)
       await tx(transaction).onceSealed()
       dispatch({ type: 'SUCCESS', })
+      getFUSDBalance()
     } catch (err) {
       dispatch({ type: 'ERROR' })
     }

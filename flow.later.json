@@ -1,0 +1,56 @@
+{
+	"emulators": {
+		"default": {
+			"port": 3569,
+			"serviceAccount": "emulator-account",
+			"accounts":["DefaultSeller"]
+		}
+	},
+	"contracts": {
+		"DappyContract": "./cadence/contracts/DappyContract.cdc",
+		"MyWorldContract": "./cadence/contracts/MyWorldContract.cdc",
+		"MyMarketplaceContract": "./cadence/contracts/MyMarketplaceContract.cdc",
+		"FUSD": {
+			"source": "./cadence/contracts/FUSD.cdc",
+			"aliases": {
+				"testnet": "0xe223d8a629e49c68"
+			}
+		},
+		"FungibleToken": {
+			"source": "./cadence/contracts/FungibleToken.cdc",
+			"aliases": {
+				"testnet": "9a0766d93b6608b7"
+			}
+		}
+	},
+	"networks": {
+		"emulator": "127.0.0.1:3569",
+		"mainnet": "access.mainnet.nodes.onflow.org:9000",
+		"testnet": "access.devnet.nodes.onflow.org:9000"
+	},
+	"accounts": {
+		"emulator-account": {
+			"address": "0xf8d6e0586b0a20c7",
+			"key": "84f82df6790f07b281adb5bbc848bd6298a2de67f94bdfac7a400d5a1b893de5",
+			"chain": "emulator"
+		},
+		"NewSeller": {
+			"address": "0x01cf0e2f2f715450",
+			"key": "649b0a182c02a2b067140a99ae766cf7add2ccdaa8e3351a782635f7d2b8d832",
+			"chain": "emulator"
+		},
+		"MyWorldAdmin": {
+			"address": "0xf4e0f64e3ff7415d",
+			"key": "97410e191ba55eacf5b470699749a27f3653ff7afe9a7d390ab785033b6b2b76"
+		}
+	},
+	"deployments": {
+		"testnet": {
+			"MyWorldAdmin": ["MyWorldContract", "MyMarketplaceContract"]
+		},
+		"emulator": {
+			"emulator-account": ["MyWorldContract", "MyMarketplaceContract", "FungibleToken", "FUSD"],
+			"NewSeller": ["DappyContract"]
+		}
+	}
+}

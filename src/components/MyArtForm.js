@@ -2,11 +2,13 @@ import React from 'react'
 import "./MyArtForm.css"
 import { useInput } from '../hooks/use-input.hook'
 import { useUser } from '../providers/UserProvider'
+import { useStorage } from '../providers/StorageProvider'
 
 export default function MyArtForm() {
     const { mintMyArt } = useUser()
     const { value: name, bind: bindName, reset: resetName } = useInput('');
     const { value: price, bind: bindPrice, reset: resetPrice } = useInput('');
+    const { uploadArtwork } = useStorage()
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -26,6 +28,10 @@ export default function MyArtForm() {
     }
 
     return (
+        <>
+        <div><img src="https://ipfs.io/ipfs/QmU43jY8AYcQo9NKuLhGX4hYUfoz5mjkwjXzz1FcmhDhEP"/></div>
+        <div className="btn btn-bg rounded" onClick={() => uploadArtwork()}>Upload Artwork</div>
+
         <form className="myart__form" onSubmit={handleSubmit}>
             <div className="myart__form__border dappy-card__border">
                 <div className="dappy-card__title">Mint Your Art</div>
@@ -42,6 +48,7 @@ export default function MyArtForm() {
                 </div>
             </div>
         </form>
+        </>
     )
 }
 

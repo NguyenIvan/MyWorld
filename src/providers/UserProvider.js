@@ -12,8 +12,9 @@ export default function UserProvider({ children }) {
   const { user } = useAuth()
   const { collection, createCollection, deleteCollection } = useCollection(user)
   const { data: balance, createFUSDVault, getFUSDBalance } = useFUSD(user)
-  const { data: userDappies, putForSale, mintMyArt, testScript } = useUserMyArts(user, collection, getFUSDBalance)
-  const { data: saleItems } = useGallery()
+  const { data: saleItems, fetchGallery } = useGallery()
+  const { data: userDappies, putForSale, mintMyArt, testScript } = 
+    useUserMyArts(user, collection, getFUSDBalance, fetchGallery)
   return (
     <UserContext.Provider
       value={{

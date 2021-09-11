@@ -1,4 +1,4 @@
-export const userDappyReducer = (state, action) => {
+export const userMyArtReducer = (state, action) => {
   switch (action.type) {
     case 'PROCESSING':
       return {

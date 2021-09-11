@@ -6,8 +6,7 @@
 		}
 	},
 	"contracts": {
-		"MyWorldContract": "./cadence/contracts/MyWorldContract.cdc",
-		"MyMarketplaceContract": "./cadence/contracts/MyMarketplaceContract.cdc",
+		"FCL": "./cadence/contracts/FCL.cdc",
 		"FUSD": {
 			"source": "./cadence/contracts/FUSD.cdc",
 			"aliases": {
@@ -19,7 +18,9 @@
 			"aliases": {
 				"testnet": "9a0766d93b6608b7"
 			}
-		}
+		},
+		"MyMarketplaceContract": "./cadence/contracts/MyMarketplaceContract.cdc",
+		"MyWorldContract": "./cadence/contracts/MyWorldContract.cdc"
 	},
 	"networks": {
 		"emulator": "127.0.0.1:3569",
@@ -27,21 +28,42 @@
 		"testnet": "access.devnet.nodes.onflow.org:9000"
 	},
 	"accounts": {
-		"emulator-account": {
-			"address": "0xf8d6e0586b0a20c7",
+		"MyWorldAdmin": {
+			"address": "f4e0f64e3ff7415d",
+			"key": "97410e191ba55eacf5b470699749a27f3653ff7afe9a7d390ab785033b6b2b76"
+		},
+		"Seller": {
+			"address": "179b6b1cb6755e31",
 			"key": "84f82df6790f07b281adb5bbc848bd6298a2de67f94bdfac7a400d5a1b893de5"
 		},
-		"MyWorldAdmin": {
-			"address": "0xf4e0f64e3ff7415d",
-			"key": "97410e191ba55eacf5b470699749a27f3653ff7afe9a7d390ab785033b6b2b76"
+		"emulator-account": {
+			"address": "f8d6e0586b0a20c7",
+			"key": "84f82df6790f07b281adb5bbc848bd6298a2de67f94bdfac7a400d5a1b893de5"
 		}
 	},
 	"deployments": {
-		"testnet": {
-			"MyWorldAdmin": ["MyWorldContract", "MyMarketplaceContract"]
-		},
 		"emulator": {
-			"emulator-account": ["MyWorldContract", "MyMarketplaceContract", "FungibleToken", "FUSD"]
+			"emulator-account": [
+				"MyWorldContract",
+				"MyMarketplaceContract",
+				"FungibleToken",
+				"FUSD",
+				{
+					"name": "FCL",
+					"args": [
+						{
+							"type": "String",
+							"value": "f847b8404519e9fbf966c6589fafe60903c0da5f55c5cb50aee5d870f097b35dfb6de13c170718cd92f50811cdd9290e51c2766440b696e0423a5031ae482cca79e3c47902038203e8"
+						}
+					]
+				}
+			]
+		},
+		"testnet": {
+			"MyWorldAdmin": [
+				"MyWorldContract",
+				"MyMarketplaceContract"
+			]
 		}
 	}
 }

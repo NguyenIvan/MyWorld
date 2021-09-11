@@ -4,37 +4,38 @@ import { mutate, query, tx } from '@onflow/fcl'
 import { LIST_USER_MYARTS } from '../flow/list-user-myarts.script'
 import { PUT_MYART_FOR_SALE } from '../flow/put-myart-for-sale.tx'
 import { MINT_MYART } from '../flow/mint-myart.tx'
-import { userDappyReducer } from '../reducer/userDappyReducer'
+import { userMyArtReducer } from '../reducer/userMyArtReducer'
 import { useTxs } from '../providers/TxProvider'
 import MyArtClass from '../utils/MyArtClass'
 
-export default function useUserMyArts(user, collection, getFUSDBalance) { /* Stateful function  to get methods and properties of user */
-  const [state, dispatch] = useReducer(userDappyReducer, {
+export default function useUserMyArts(user, collection, getFUSDBalance, fetchGallery) { /* Stateful function  to get methods and properties of user */
+  const [state, dispatch] = useReducer(userMyArtReducer, {
     loading: false,
     error: false,
-    data: [] // data will be renamed to userDappies
+    data: [] // data will be renamed to useUserMyArts
   })
   const { addTx, runningTxs } = useTxs()
 
-  useEffect(() => { /* useEffect is use as a side effect after render or update of a component. It is used in replacement for DidMount and DidUpdate */
-    const fetchMyArts = async () => {
-      dispatch({ type: 'PROCESSING' }) /* Dispatch is use to update statful object */
-      try {
-        let res = await query({
-          cadence: LIST_USER_MYARTS, /*Now it's the call to cadence to get list of dappies */
-          args: (arg, t) => [arg(user?.addr, t.Address)]
-        })
+  const fetchMyArts = async () => {
+    dispatch({ type: 'PROCESSING' }) /* Dispatch is use to update statful object */
+    try {
+      let res = await query({
+        cadence: LIST_USER_MYARTS, /*Now it's the call to cadence to get list of myart */
+        args: (arg, t) => [arg(user?.addr, t.Address)]
+      })
 
-        // fix dna
-        let myarts = Object.keys(res).map(key => {
-          return new MyArtClass(key, res[key].name, res[key].price) // TODO: should be wantPrice, remove bellow
-        })
+      // fix dna
+      let myarts = Object.keys(res).map(key => {
+        return new MyArtClass(key, res[key].name, res[key].price) // TODO: should be wantPrice, remove bellow
+      })
 
-        dispatch({ type: 'SUCCESS', payload: myarts })
-      } catch (err) {
-        dispatch({ type: 'ERROR' })
-      }
+      dispatch({ type: 'SUCCESS', payload: myarts })
+    } catch (err) {
+      dispatch({ type: 'ERROR' })
     }
+  }
+
+  useEffect(() => { /* useEffect is use as a side effect after render or update of a component. It is used in replacement for DidMount and DidUpdate */
     fetchMyArts()
     //eslint-disable-next-line
   }, [])
@@ -56,6 +57,8 @@ export default function useUserMyArts(user, collection, getFUSDBalance) { /* Sta
       addTx(res)
       await tx(res).onceSealed()
       await getFUSDBalance()
+      fetchMyArts()
+      fetchGallery()
     }
     catch (error) {
       console.log(error)
@@ -81,6 +84,7 @@ export default function useUserMyArts(user, collection, getFUSDBalance) { /* Sta
       await tx(res).onceSealed()
       /* TODO: should update collection here */
       await getFUSDBalance()
+      await fetchMyArts()
     }
     catch (error) {
       console.log(error)
