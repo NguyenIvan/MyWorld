@@ -1,2 +1,2 @@
 # Attribution
-This code is addapted from Dappies repo of Dapper Lab.
+This code is adapted from Dappies repo of Dapper Lab.

@@ -1,7 +1,16 @@
 # My code
 old_code
-*.pm2
-*.flow
+
+# VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+
+# Local History for Visual Studio Code
+.history/
 
 # Logs
 logs
@@ -120,12 +129,5 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-myworldaccount.json
-myworldkeys.json
-userkeys.json
-useraccount.json
-
-publish.sh
 log.flow
-built.rlp
-built.rpl
+
