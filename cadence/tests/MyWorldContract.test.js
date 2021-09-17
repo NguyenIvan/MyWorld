@@ -7,10 +7,6 @@ import {
   getAccountAddress
 } from "flow-js-testing"
 
-import {
-  deployMyMarketContract,
-  createSaleCollection
-} from "./src/MyMarketplaceContract";
 
 import {
   deployMyWorldContract,
@@ -24,7 +20,8 @@ import { fundAccountWithFUSD } from "./src/FUSD";
 
 const TEST_MYART = {
   name: "Panda Dappy",
-  price: "7.00000000"
+  price: "7.00000000",
+  uri: "https://ipfs.io/ipfs/bafybeih2xfiepfxicjy2qkfxktzmpbe6nx4mqfkalvbtajiwmdyb32kwk4"
 }
 
 jest.setTimeout(50000);

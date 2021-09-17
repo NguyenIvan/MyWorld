@@ -5,9 +5,9 @@ import "./MyArtCard.css"
 import  { getRandomImgSrc }  from '../utils/myworld.utils'
 
 
-export default function MyArtCard({ myart, store, designer }) {
+export default function MyArtCard({ myart, store }) {
   const { userDappies, putForSale } = useUser()
-  const { id, image, name, price } = myart
+  const { id, name, price, uri } = myart
   const owned = userDappies.some(d => d?.id === myart?.id)
 
   const SellButton = () => (
@@ -23,9 +23,9 @@ export default function MyArtCard({ myart, store, designer }) {
 
     <div className="dappy-card__border">
       <div className={`dappy-card__wrapper ${owned && store && "faded"}`} >
-        <img className="dappy-card__image img-large" src={ image? image: getRandomImgSrc() } alt="Art" />
+        <img className="dappy-card__image img-large" src={ uri } alt="Art" />
         <br />
-        <h3 className="dappy-card__title">{name}</h3>
+        <h3 className="myart-cart__title">{name}</h3>
         <p className="dappy-card__info"># {id}</p>
       </div>
       <SellButton />

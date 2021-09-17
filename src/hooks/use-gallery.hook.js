@@ -23,7 +23,7 @@ export default function useGallery() { /* Stateful function  to get methods and 
       })
 
       let myarts = Object.keys(res).map(key => {
-        return new MyArtClass(key, res[key].name, res[key].price) // TODO: should be wantPrice, remove bellow
+        return new MyArtClass(key, res[key].name, res[key].price, res[key].uri) // TODO: should be wantPrice, remove bellow
       })
 
       dispatch({ type: 'SUCCESS', payload: myarts })

@@ -1,3 +1,8 @@
+# My code
+old_code
+*.pm2
+*.flow
+
 # Logs
 logs
 *.log

@@ -4,6 +4,7 @@ export default function useStorageArtwork() {
 
   const uploadArtwork = async() =>
   {
+    
   }
   
   useEffect(() => {

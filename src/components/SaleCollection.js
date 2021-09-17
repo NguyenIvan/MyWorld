@@ -6,7 +6,7 @@ import './MyArtList.css'
 export default function SaleCollection({ myarts }) {
 
   return (
-    <div className="dappy-list__wrapper">
+    <div className="myart-list__wrapper">
       {myarts.map((myart, i) => (
         <GalleryCard
           key={i}

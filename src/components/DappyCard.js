@@ -43,7 +43,7 @@ export default function MyArtCard({ dappy, store, designer }) {
           <img className={`dappy-card__image ${type === "Pack" && "img-large"}`} src={image} alt="Pack" />
         }
         <br />
-        <h3 className="dappy-card__title">{name}</h3>
+        <h3 className="myart-cart__title">{name}</h3>
         {!designer ?
           <p className="dappy-card__info"># {id} {owned && !store && ` / ${serialNumber}`}</p>
           : <input className="dappy-card__info" value={dna} />

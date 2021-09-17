@@ -4,7 +4,7 @@ module.exports = {
   coveragePathIgnorePatterns: ["/node_modules/"],
   projects: [{
     "displayName": "MyMarketplace",
-    "testMatch": ["<rootDir>/*.test.js"]
-    // "testMatch": ["<rootDir>/MyMarketplaceContract.test.js"]
+    // "testMatch": ["<rootDir>/*.test.js"]
+    "testMatch": ["<rootDir>/My*.test.js"]
   }]
 };

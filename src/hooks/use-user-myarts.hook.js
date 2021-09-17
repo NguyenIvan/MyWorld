@@ -26,7 +26,7 @@ export default function useUserMyArts(user, collection, getFUSDBalance, fetchGal
 
       // fix dna
       let myarts = Object.keys(res).map(key => {
-        return new MyArtClass(key, res[key].name, res[key].price) // TODO: should be wantPrice, remove bellow
+        return new MyArtClass(key, res[key].name, res[key].price, res[key].uri) // TODO: should be wantPrice, remove bellow
       })
 
       dispatch({ type: 'SUCCESS', payload: myarts })
@@ -65,7 +65,7 @@ export default function useUserMyArts(user, collection, getFUSDBalance, fetchGal
     }
   
   }
-  const mintMyArt = async (name, price) => {  /* These functions are ways to change the stateful object */
+  const mintMyArt = async (name, price, uri) => {  /* These functions are ways to change the stateful object */
     if (!collection) {
       alert("You need to enable the collection first. Go to the tab Collection")
       return
@@ -78,7 +78,11 @@ export default function useUserMyArts(user, collection, getFUSDBalance, fetchGal
       let res = await mutate({
         cadence: MINT_MYART,
         limit: 55,
-        args: (arg, t) => [arg(name, t.String), arg(price, t.UFix64)]
+        args: (arg, t) => [
+          arg(name, t.String), 
+          arg(price, t.UFix64),
+          arg(uri, t.String)
+        ]
       })
       addTx(res)
       await tx(res).onceSealed()

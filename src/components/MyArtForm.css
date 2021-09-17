@@ -6,7 +6,6 @@
     margin: 1rem;
 }
 .myart__form__item > * {
-    margin-top: 1rem;
     font-family: "Rebrand Light";
 }
 
@@ -18,7 +17,12 @@
   }
   
 .myart__form__border {
-    padding-top: 1rem;
-    padding-bottom: 1rem;
+    padding: 1rem 1rem 0.5rem 0.5rem;
     border: 0.5rem solid white;
+    max-width: 400px;
+}
+
+.myart__form__artwork > img {
+  max-width: 100%;
+  max-height: 100%;
 }

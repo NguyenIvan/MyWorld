@@ -3,7 +3,7 @@ import FUSD from "../contracts/FUSD.cdc"
 import FungibleToken from "../contracts/FungibleToken.cdc"
 
 
-transaction(name: String, price: UFix64) {
+transaction(name: String, price: UFix64, uri:String) {
   let receiverReference: &MyWorldContract.Collection{MyWorldContract.Receiver}
   let sentVault: @FungibleToken.Vault
 
@@ -15,7 +15,7 @@ transaction(name: String, price: UFix64) {
   }
 
   execute {
-    let newMyArt <- MyWorldContract.mintMyArt(artData: MyWorldContract.MyArtData(name: name, price: price), paymentVault: <-self.sentVault)
+    let newMyArt <- MyWorldContract.mintMyArt(artData: MyWorldContract.MyArtData(name: name, price: price, uri:uri), paymentVault: <-self.sentVault)
     self.receiverReference.deposit(token: <-newMyArt)
   }
 }

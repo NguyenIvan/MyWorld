@@ -27,7 +27,7 @@ export const deployMyMarketContract = async(accountAddress) => {
     { to:account, name: "MyMarketplaceContract", addressMap})
 }
 
-export const putOneForSale = async({name, price}) => {
+export const putOneForSale = async({name, price, uri}) => {
   const MyWorldAdmin = await getAccountAddress("MyWorldAdmin")
   const Seller = await getAccountAddress("Seller")
   await deployMyWorldContract(MyWorldAdmin)
@@ -37,7 +37,7 @@ export const putOneForSale = async({name, price}) => {
   await fundAccountWithFUSD(Seller, "100.00")
   await fundAccountWithFUSDFast(MyWorldAdmin, "100.00")
   await createMyArtCollection(Seller)
-  await mintMyArt(Seller, {name, price})
+  await mintMyArt(Seller, {name, price, uri})
   const myArts = await listUserMyArts(Seller)
   const myArtId = parseInt(Object.keys(myArts)[0]) 
   const wantPrice = myArts[myArtId].price

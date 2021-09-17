@@ -8,7 +8,7 @@ import MyArtForm from './MyArtForm'
 export default function MyArtList({ myarts }) {
 
   return (
-    <div className="dappy-list__wrapper">
+    <div className="myart-list__wrapper">
       {myarts.map((myart, i) => (
         <MyArtCard
           key={i}
@@ -16,11 +16,7 @@ export default function MyArtList({ myarts }) {
         />
       ))
       }
-      <div className="dappy-card__border">
-        <div className="dappy-card__wrapper">
-          <MyArtForm />
-        </div>
-      </div>
+      <MyArtForm />
     </div>
   )
 }

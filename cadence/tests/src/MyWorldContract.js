@@ -8,7 +8,8 @@ import {
 
 export const TEST_MYART = {
   name: "Panda Dappy",
-  price: "7.00000000"
+  price: "7.00000000",
+  uri: "https://ipfs.io/ipfs/bafybeih2xfiepfxicjy2qkfxktzmpbe6nx4mqfkalvbtajiwmdyb32kwk4"
 }
 
 export const deployMyWorldContract = async(accountAddress) => {
@@ -27,7 +28,7 @@ export const createMyArtCollection = async (recipient) => {
 export const mintMyArt = async (recipient, myArtData) => {
   const name = "MintMyArt"
   const signers = [recipient]
-  const args = [myArtData.name, myArtData.price]
+  const args = [myArtData.name, myArtData.price, myArtData.uri]
   await sendTransaction({ name, args, signers})
 }
 

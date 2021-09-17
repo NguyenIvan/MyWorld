@@ -17,16 +17,20 @@ pub contract MyWorldContract {
       }
       MyWorldContract.totalArts = MyWorldContract.totalArts + 1
       self.id = MyWorldContract.totalArts
-      self.data = MyArtData(name: artData.name, price: artData.price)
+      // self.data = MyArtData(name: artData.name, price: artData.price)
+      self.data = artData
     }
   }
 
   pub struct MyArtData {
     pub let name: String
     pub let price: UFix64
-    init (name: String, price: UFix64) {
+    pub let uri: String
+
+    init (name: String, price: UFix64, uri: String) {
       self.name = name
       self.price = price
+      self.uri = uri
     }
   }
 
@@ -93,6 +97,8 @@ pub contract MyWorldContract {
     pre {
       artData.name.length >= 0 : "Art must have a name"
       artData.price >=0.0 : "Art must have a price"
+      artData.uri.length >= 0 : "Art must have an uri"
+
       paymentVault.balance >= artData.price: "Could not mint art: payment balance insufficient."
     }
     destroy paymentVault
@@ -108,46 +114,3 @@ pub contract MyWorldContract {
   }
   
 }
-
-/* 
-(R) MyArt - or MA - is the most important piece of MyWorldContract. 
-- MA is  minted by a registered address
-- MA need to be approved to be listed
-- MA belong to a person's collection
-- Property of MA: Id -> Incremental, Price -> MyW, IPFS Storage(V0.1) || /public/assets/MyArtDefault.png
-This is how MA collection is created (by AuthAccout)
-
-transaction {
-    prepare(acct: AuthAccount) {
-      let collection <- DappyContract.createEmptyCollection()
-      acct.save<@DappyContract.Collection>(<-collection, to: DappyContract.CollectionStoragePath)
-      acct.link<&{DappyContract.CollectionPublic}>(DappyContract.CollectionPublicPath, target: DappyContract.CollectionStoragePath)
-    }
-  }
-
-This is how an MA is minted in exchange for a Vault and deposit to an AuthAccount (receiver interface)
-
-execute {
-  let newDappy <- DappyContract.mintDappy(templateID: templateID, paymentVault: <-self.sentVault)
-  self.receiverReference.deposit(token: <-newDappy)
-}
-
-People can mint MA with a vault. By the time of minting they should have:
-- A balance of FUSD >= mintFee
-- A name for his or her arts
-- A price set for his or her arts
-- Approval from Admin (V0.1)
-
-There should be a test for this cadence code
-
-*/
-
-
-/*
-DappyContract most important piece is (R) Dappy. Dappy is minted only on a template, which consist of price, dna and name. The length of a dna decide the price of the Dappy. How ever if the Dappy is minted from a (R) Family, its price is up to the family preset price.
-Admin has all the rights to the objects in DappyContract and is exposed outside, especially with Template and Family.
-Collection is exposed through /public/DappyCollection/Public expose basic ops: deposit, withdraw, list dappies.
-Each Dappy has an ID (incremental when created, in tandem with dappyTotal in the contract) and data from which template it was created from.
-There is a minor struct FamilyReport that help add an abstract layer between Family objects and public (could be replace with an Interface easily).
-*/
- 

@@ -23,7 +23,7 @@ export default function Wallet() {
         </div>
       }
       <div className="btn btn-small" onClick={() => logOut()}>👋 Logout</div>
-      <div onClick={() => testScript()} className="btn btn-small">Test Script</div>
+      {/* <div onClick={() => testScript()} className="btn btn-small">Test Script</div> */}
     </div>
   )
 }
