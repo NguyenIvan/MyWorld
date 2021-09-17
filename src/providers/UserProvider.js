@@ -13,13 +13,13 @@ export default function UserProvider({ children }) {
   const { collection, createCollection, deleteCollection } = useCollection(user)
   const { data: balance, createFUSDVault, getFUSDBalance } = useFUSD(user)
   const { data: saleItems, fetchGallery } = useGallery()
-  const { data: userDappies, putForSale, mintMyArt, testScript } = 
+  const { data: useMyarts, putForSale, mintMyArt, testScript } = 
     useUserMyArts(user, collection, getFUSDBalance, fetchGallery)
   return (
     <UserContext.Provider
       value={{
         saleItems,
-        userDappies,
+        useMyarts,
         putForSale,
         mintMyArt,
         collection,
@@ -37,5 +37,5 @@ export default function UserProvider({ children }) {
 }
 
 export const useUser = () => {
-  return useContext(UserContext) /* What is useContext and UserContext? */
+  return useContext(UserContext)
 }

@@ -86,7 +86,6 @@ export default function useUserMyArts(user, collection, getFUSDBalance, fetchGal
       })
       addTx(res)
       await tx(res).onceSealed()
-      /* TODO: should update collection here */
       await getFUSDBalance()
       await fetchMyArts()
     }

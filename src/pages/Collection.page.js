@@ -4,7 +4,7 @@ import Header from '../components/Header'
 import { useUser } from '../providers/UserProvider'
 
 export default function Collection() {
-  const { collection, createCollection, deleteCollection, userDappies } = useUser()
+  const { collection, createCollection, deleteCollection, useMyarts } = useUser()
 
   return (
     <>
@@ -16,7 +16,7 @@ export default function Collection() {
       {!collection ?
         <div className="btn btn-bg rounded" onClick={() => createCollection()}>Enable Collection</div> :
         <>
-          <MyArtList myarts={userDappies} />
+          <MyArtList myarts={useMyarts} />
           <div className="btn btn-bg rounded" onClick={() => deleteCollection()}>Delete Collection</div>
         </>
       }

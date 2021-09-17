@@ -19,7 +19,7 @@ import {
 import { fundAccountWithFUSD } from "./src/FUSD";
 
 const TEST_MYART = {
-  name: "Panda Dappy",
+  name: "In My World",
   price: "7.00000000",
   uri: "https://ipfs.io/ipfs/bafybeih2xfiepfxicjy2qkfxktzmpbe6nx4mqfkalvbtajiwmdyb32kwk4"
 }

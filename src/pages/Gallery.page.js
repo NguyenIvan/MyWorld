@@ -6,7 +6,6 @@ import Header from '../components/Header'
 
 export default function Gallery() {
   const { saleItems } = useUser()
-  /* Change the name of prop from data to dappyTemplates */
   return (
     <>
       <Header

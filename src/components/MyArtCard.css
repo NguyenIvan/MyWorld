@@ -1,9 +1,9 @@
-.dappy-card__border {
+.myart-card__border {
   position: relative;
   margin-bottom: 2.5rem;
 }
 
-.dappy-card__wrapper {
+.myart-card__wrapper {
   max-width: 15rem;
   min-width: 15rem;
   background: transparent;
@@ -13,13 +13,13 @@
   position: relative
 }
 
-.dappy-card__image {
+.myart-card__image {
   margin-bottom: 0;
   width: 50%;
   cursor: pointer;
 }
 
-.dappy-card__image:hover {
+.myart-card__image:hover {
   animation: tada;
   animation-duration: .8s;
 }
@@ -30,7 +30,7 @@
   font-size: 1.3rem;
 }
 
-.dappy-card__info {
+.myart-card__info {
  font-family: "Rebrand Light"
 }
 

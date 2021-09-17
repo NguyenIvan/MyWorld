@@ -5,7 +5,6 @@ config({
   "discovery.wallet": process.env.REACT_APP_WALLET_DISCOVERY,
   "0xFungibleToken": process.env.REACT_APP_FT_CONTRACT,
   "0xFUSD": process.env.REACT_APP_FUSD_CONTRACT,
-  "0xDappy": process.env.REACT_APP_DAPPY_CONTRACT,
   "0xMyWorld": process.env.REACT_APP_MYWORLD_CONTRACT,
   "0xMyMarketplace": process.env.REACT_APP_MYMARKETPLACE_CONTRACT
 })

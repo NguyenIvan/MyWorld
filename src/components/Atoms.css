@@ -29,13 +29,6 @@
   text-align: left;
 }
 
-.btn-dappy {
-  width: 60%;
-  margin: 0 auto;
-  display: flex; 
-  justify-content: center;
-}
-
 .btn-icon {
   font-size: 1.2rem; 
   margin-right: .2rem
