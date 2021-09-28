@@ -1,0 +1,30 @@
+ 
+.footer-social-icons {
+    font-size: 0;
+    list-style: none;
+    padding: 0px;
+    text-align: center;
+    width: 110rem;
+    max-width: 100%;
+    position: absolute;
+    bottom: 0;
+
+}
+
+.footer-social-icons > li {
+    display: inline-block;
+    margin: 1.2rem;
+ }
+ .footer-social-icons a {
+    display: block;
+    height: 5rem;
+    width: 5rem;
+} 
+ 
+.footer-social-icons a:hover{
+    border-radius: 100%;
+    fill: #0e1a25;
+    transform: scale(1.25);
+    transition: background-color 0.5s, transform 0.5s ease-out;
+  }  
+  

@@ -6,7 +6,7 @@ import './AccountDetails.css'
 
 export default function Wallet() {
   const { user, logOut } = useAuth()
-  const { balance, createFUSDVault, testScript } = useUser()
+  const { balance, createFUSDVault } = useUser()
 
   return (
     <div className="wallet__popup">

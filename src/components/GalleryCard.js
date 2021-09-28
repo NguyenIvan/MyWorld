@@ -2,8 +2,6 @@ import React from 'react'
 
 import { useUser } from '../providers/UserProvider'
 import "./MyArtCard.css"
-import  { getRandomImgSrc }  from '../utils/myworld.utils'
-
 
 export default function MyArtCard({ myart, store }) {
   const { useMyarts, putForSale } = useUser()
