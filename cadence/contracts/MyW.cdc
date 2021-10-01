@@ -1,9 +1,11 @@
-import FungibleToken from "./FungibleToken.cdc"
-// import FungibleToken from 0xf8d6e0586b0a20c7
+// import FungibleToken from "./FungibleToken.cdc"
+import FungibleToken from 0xf8d6e0586b0a20c7
 
 pub contract MyW: FungibleToken {
 
     pub var totalSupply: UFix64
+
+    pub let maxSupply: UFix64
 
     pub event TokensInitialized(initialSupply: UFix64)
 
@@ -46,8 +48,10 @@ pub contract MyW: FungibleToken {
     }
 
     pub init() {
-        self.totalSupply = 1000000000.00
-    }
+        self.totalSupply = 0.0
+        // TODO: check mint and max supply
+        self.maxSupply = 1000000000.00
+     }
 
 }
  
