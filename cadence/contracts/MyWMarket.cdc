@@ -1,12 +1,11 @@
-// import FungibleToken from "./FungibleToken.cdc"
-// import NonFungibleToken from "./NonFungibleToken.cdc"
-// import NonFungibleToken from "./NonFungibleToken.cdc"
-// import MyWArt from  "./MyWArt.cdc"
-// import MyW from  "./MyW.cdc"
-import FungibleToken from 0xf8d6e0586b0a20c7
-import NonFungibleToken from 0xf8d6e0586b0a20c7
-import MyWArt from  0xf8d6e0586b0a20c7
-import MyW from  0xf8d6e0586b0a20c7
+import FungibleToken from "./FungibleToken.cdc"
+import NonFungibleToken from "./NonFungibleToken.cdc"
+import MyWArt from  "./MyWArt.cdc"
+import MyW from  "./MyW.cdc"
+// import FungibleToken from 0xf8d6e0586b0a20c7
+// import NonFungibleToken from 0xf8d6e0586b0a20c7
+// import MyWArt from  0xf8d6e0586b0a20c7
+// import MyW from  0xf8d6e0586b0a20c7
 
 pub contract MyWMarket {
 
@@ -61,7 +60,7 @@ pub contract MyWMarket {
                     "Beneficiary's Receiver Capability is invalid!" 
             }
 
-            self.forSale <- MyWArt.createEmptyCollection() as! @MyWArt.Collection
+            self.forSale <- MyWArt.createEmptyCollection()
             self.ownerCapability = ownerCapability
             self.beneficiaryCapability = beneficiaryCapability
             // prices are initially empty because there are no Arts for sale

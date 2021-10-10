@@ -5,14 +5,14 @@ import { useUser } from '../providers/UserProvider'
 import Header from '../components/Header'
 
 export default function Gallery() {
-  const { saleItems } = useUser()
+  const  { saleItems } = useUser()
   return (
     <>
       <Header
         title={<><span className="highlight">MyWorld </span>Gallery</>}
         subtitle={<>Browse <span className="highlight">arts</span> in our gallery</>}
       />
-      <SaleCollection myarts={ saleItems } />
+      <SaleCollection saleItems={ saleItems } />
     </>
   )
 }

@@ -5,7 +5,7 @@ import Providers from './providers/Providers.comp';
 import Routes from './components/Routes.comp'
 import { ROUTES } from './config/routes.config';
 import Wallet from './components/AccountDetails';
-import Footer from './components/Footer';
+// import Footer from './components/Footer';
 
 export default function App() {
   return (
@@ -16,7 +16,7 @@ export default function App() {
 
       <Routes routes={ROUTES} />
     </Providers>
-    <Footer />
+    {/* <Footer /> */}
     </>
   )
 }

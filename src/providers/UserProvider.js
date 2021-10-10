@@ -13,7 +13,7 @@ export default function UserProvider({ children }) {
   const { collection, createCollection, deleteCollection } = useCollection(user)
   const { data: balance, createFUSDVault, getFUSDBalance } = useFUSD(user)
   const { data: saleItems, fetchGallery } = useGallery()
-  const { data: useMyarts, putForSale, mintMyArt, testScript } = 
+  const { data: useMyarts, putForSale, buyMyWArt, mintMyArt, testScript } = 
     useUserMyArts(user, collection, getFUSDBalance, fetchGallery)
   return (
     <UserContext.Provider
@@ -21,6 +21,7 @@ export default function UserProvider({ children }) {
         saleItems,
         useMyarts,
         putForSale,
+        buyMyWArt,
         mintMyArt,
         collection,
         createCollection,

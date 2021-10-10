@@ -40,13 +40,17 @@ export default function useUserMyArts(user, collection, getFUSDBalance, fetchGal
     //eslint-disable-next-line
   }, [])
 
-  const putForSale = async (id, price) => {
+  const buyMyWArt = async (myWArt) => { //TODO: Strong type here
+    console.log(myWArt)
+  }
+
+  const putForSale = async (id, want_price) => {
     if (runningTxs) {
       alert("Transactions are still running. Please wait for them to finish first.")
       return
     }
     try  {
-      const wantPrice = parseFloat(price).toFixed(8)
+      const wantPrice = parseFloat(want_price).toFixed(8)
       const adminAddress =  process.env.REACT_APP_MYMARKETPLACE_CONTRACT
       const artId = parseInt(id)
       let res = await mutate({
@@ -110,6 +114,7 @@ export default function useUserMyArts(user, collection, getFUSDBalance, fetchGal
     ...state,
     putForSale,
     mintMyArt,
-    testScript
+    testScript,
+    buyMyWArt
   }
 }

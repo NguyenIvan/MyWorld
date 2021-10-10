@@ -1,8 +1,6 @@
 import { useEffect, useReducer } from 'react'
-
-import { query } from '@onflow/fcl'
-import { LIST_SALE_COLLECTION } from '../flow/list-sale-collection.script'
-import MyArtClass from '../utils/MyArtClass'
+import GalleryData from '../utils/GalleryData.class'
+// import MyArtClass from '../utils/MyArtClass'
 import { defaultReducer } from '../reducer/defaultReducer'
 
 export default function useGallery() { /* Stateful function  to get methods and properties of user */
@@ -16,18 +14,22 @@ export default function useGallery() { /* Stateful function  to get methods and 
   const fetchGallery = async () => {
     dispatch({ type: 'PROCESSING' })
     try {
-      const marketplaceAddress = process.env.REACT_APP_MYMARKETPLACE_CONTRACT
-      let res = await query({
-        cadence: LIST_SALE_COLLECTION,
-        args: (arg, t) => [arg(marketplaceAddress, t.Address)]
-      })
+      // here  
+      GalleryData.getAll()
+        .then(res => {
+          dispatch({ type: 'SUCCESS', payload: res.data });
+        })
+        .catch(e => {
+          console.log(e);
+          dispatch({ type: 'ERROR' });
+        })
 
-      let myarts = Object.keys(res).map(key => {
-        return new MyArtClass(key, res[key].name, res[key].price, res[key].uri) // TODO: should be wantPrice, remove bellow
-      })
+      // let myarts = Object.keys(res).map(key => {
+      //   return new MyArtClass(key, res[key].name, res[key].price, res[key].uri) // TODO: should be wantPrice, remove bellow
+      // })
 
-      dispatch({ type: 'SUCCESS', payload: myarts })
     } catch (err) {
+      console.log(err);
       dispatch({ type: 'ERROR' })
     }
   }

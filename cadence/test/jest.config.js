@@ -3,8 +3,8 @@ module.exports = {
   verbose: true,
   coveragePathIgnorePatterns: ["/node_modules/"],
   projects: [{
-    "displayName": "MyMarketplace",
-    // "testMatch": ["<rootDir>/*.test.js"]
-    "testMatch": ["<rootDir>/My*.test.js"]
+    "displayName": "MyWorld Cadence Tests",
+    "testMatch": ["<rootDir>/**/*.test.js"]
+    // "testMatch": ["<rootDir>/My*.test.js"]
   }]
 };
