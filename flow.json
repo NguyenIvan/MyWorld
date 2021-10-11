@@ -7,6 +7,11 @@
 	},
 	"contracts": {
 		"FCL": "./cadence/contracts/FCL.cdc",
+		"NonFungibleToken": "./cadence/contracts/NonFungibleToken.cdc",
+		"MyW": "./cadence/contracts/MyW.cdc",
+		"MyWAdminReceiver": "./cadence/contracts/MyWAdminReceiver.cdc",
+		"MyWArt": "./cadence/contracts/MyWArt.cdc",
+		"MyWMarket": "./cadence/contracts/MyWMarket.cdc",
 		"FUSD": {
 			"source": "./cadence/contracts/FUSD.cdc",
 			"aliases": {
@@ -18,9 +23,7 @@
 			"aliases": {
 				"testnet": "9a0766d93b6608b7"
 			}
-		},
-		"MyMarketplaceContract": "./cadence/contracts/MyMarketplaceContract.cdc",
-		"MyWorldContract": "./cadence/contracts/MyWorldContract.cdc"
+		}
 	},
 	"networks": {
 		"emulator": "127.0.0.1:3569",
@@ -44,8 +47,7 @@
 	"deployments": {
 		"emulator": {
 			"emulator-account": [
-				"MyWorldContract",
-				"MyMarketplaceContract",
+				"NonFungibleToken",
 				"FungibleToken",
 				"FUSD",
 				{
@@ -56,13 +58,19 @@
 							"value": "f847b8404519e9fbf966c6589fafe60903c0da5f55c5cb50aee5d870f097b35dfb6de13c170718cd92f50811cdd9290e51c2766440b696e0423a5031ae482cca79e3c47902038203e8"
 						}
 					]
-				}
+				},
+				"MyW",
+				"MyWArt",
+				"MyWMarket",
+				"MyWAdminReceiver"
 			]
 		},
 		"testnet": {
 			"MyWorldAdmin": [
-				"MyWorldContract",
-				"MyMarketplaceContract"
+				"MyW",
+				"MyWAdminReceiver",
+				"MyWArt",
+				"MyWMarket"
 			]
 		}
 	}
