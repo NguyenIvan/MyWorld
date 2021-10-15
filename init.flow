@@ -1,21 +1,35 @@
 #!/bin/bash
 
 echo Starting emulator and wallet-dev services
-docker-compose -f /code/wallet/docker-compose.yml  up -d
+docker-compose -f /code/wallet/docker-compose.yml  up -d 
 sleep 2
+
 echo Deploying flow project with default addresses to emulator chain
 flow project deploy --network=emulator
-sleep 2
+
 echo Create FUSD Minter for service account
 flow transactions send cadence/transactions/CreateFUSDMinter.cdc
+
 SELLER_ADDRESS=0x179b6b1cb6755e31
 echo Seller Address: $SELLER_ADDRESS
+
 echo Create FUSD Vault for Seller Account
-flow transactions send cadence/transactions/CreateFUSDVault.cdc --signer Seller
+flow transactions send cadence/transactions/SetupMyWVault.txn.cdc --signer Seller
+
+echo Create FUSD Vault for Service Account
+flow transactions send cadence/transactions/SetupMyWVault.txn.cdc 
+
 echo Service Account:
 flow accounts get f8d6e0586b0a20c7 |grep Contract
+
 echo Seller Account:
 flow accounts get $SELLER_ADDRESS |grep Contract
-sleep 2
+
 echo "Send 10,000 FUSD for Seller ($SELLER_ADDRESS)"
-flow transactions send cadence/transactions/MintFUSD.cdc  $SELLER_ADDRESS  10000.00
+flow transactions send cadence/transactions/SendMyWToken.txn.cdc 10000.00  $SELLER_ADDRESS
+
+echo "Setup MyWArt Collection ($SELLER_ADDRESS)"
+flow transactions send cadence/transactions/InitMyWArtCollection.txn.cdc --signer  Seller
+
+# echo "Mint test MyWArt ($SELLER_ADDRESS)"
+# flow transactions send cadence/transactions/MintMyWArt.txn.cdc 0xf8d6e0586b0a20c7 --signer  Seller

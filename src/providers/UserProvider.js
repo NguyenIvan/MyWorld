@@ -1,9 +1,9 @@
 import React, { createContext, useContext } from 'react'
 
-import useUserMyArts from '../hooks/use-user-myarts.hook'
+import useUserMyWArts from '../hooks/use-user-mywarts.hook'
 import useGallery from '../hooks/use-gallery.hook'
 import useCollection from '../hooks/use-collection.hook'
-import useFUSD from '../hooks/use-fusd.hook'
+import useMyW from '../hooks/use-myw.hook'
 import { useAuth } from './AuthProvider'
 
 const UserContext = createContext()
@@ -11,10 +11,10 @@ const UserContext = createContext()
 export default function UserProvider({ children }) {
   const { user } = useAuth()
   const { collection, createCollection, deleteCollection } = useCollection(user)
-  const { data: balance, createFUSDVault, getFUSDBalance } = useFUSD(user)
+  const { data: balance, createMyWVault, getMyWBalance } = useMyW(user)
   const { data: saleItems, fetchGallery } = useGallery()
-  const { data: useMyarts, putForSale, buyMyWArt, mintMyArt, testScript } = 
-    useUserMyArts(user, collection, getFUSDBalance, fetchGallery)
+  const { data: useMyarts, putForSale, buyMyWArt, mintMyWArt, queryMyWArtMintFee, testScript } = 
+    useUserMyWArts(user, collection, getMyWBalance, fetchGallery)
   return (
     <UserContext.Provider
       value={{
@@ -22,14 +22,15 @@ export default function UserProvider({ children }) {
         useMyarts,
         putForSale,
         buyMyWArt,
-        mintMyArt,
+        mintMyWArt,
+        queryMyWArtMintFee,
+        testScript,
         collection,
         createCollection,
         deleteCollection,
         balance,
-        createFUSDVault,
-        getFUSDBalance,
-        testScript
+        createMyWVault,
+        getMyWBalance,
       }}>
 
       {children}

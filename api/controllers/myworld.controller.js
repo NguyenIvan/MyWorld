@@ -1,5 +1,19 @@
 import db from "../models/index.js";
 
+const mint = (req, res) => {
+  // Create a model
+  const art = new db.MyWArt({
+
+    id: req.body.id,
+    name: req.body.name,
+    uri: req.body.uri,
+    price: req.body.want_price,
+    description: req.body.description
+
+  });
+    
+}
+
 const create = (req, res) => {
 
   // Create a model
@@ -8,6 +22,7 @@ const create = (req, res) => {
     id: req.body.id,
     name: req.body.name,
     uri: req.body.uri,
+    description: req.body.description,
     want_price: req.body.want_price,
     seller_address: req.body.seller_address,
     seller_name: req.body.seller_name

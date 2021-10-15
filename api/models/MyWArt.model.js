@@ -8,7 +8,8 @@ const MyWArtSchema = new mongoose.Schema(
         id: Number,
         name: String,
         price: Number,
-        uri: String
+        uri: String,
+        description: String
     },
     { timestamps: true },
     options

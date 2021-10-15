@@ -9,6 +9,16 @@ import MyW from  "./MyW.cdc"
 
 pub contract MyWMarket {
 
+    pub let DefaultCutPercentage: UFix64
+
+    pub let DefaultBeneficiaryAddress: Address
+
+    // preset path for SaleCollection
+    pub let MyWSaleCollectionPath : StoragePath
+
+    // preset path for SalePublic
+    pub let MyWSalePublicPath : PublicPath
+
     // emitted when an Art is listed for sale
     pub event MyWArtListed(id: UInt64, price: UFix64, seller: Address?)
     // emitted when the price of a listed Art has changed
@@ -28,15 +38,8 @@ pub contract MyWMarket {
             }
         }
         pub fun getPrice(tokenID: UInt64): UFix64?
+
         pub fun getIDs(): [UInt64]
-        pub fun borrowArt(id: UInt64): &MyWArt.NFT? {
-            // If the result isn't nil, the id of the returned reference
-            // should be the same as the argument to the function
-            post {
-                (result == nil) || (result?.id == id): 
-                    "Cannot borrow Art reference: The ID of the returned reference is incorrect"
-            }
-        }
     }
 
     pub resource  SaleCollection: SalePublic{
@@ -54,10 +57,12 @@ pub contract MyWMarket {
         init (ownerCapability: Capability, beneficiaryCapability: Capability, cutPercentage: UFix64) {
             pre {
                 // Check that both capabilities are for fungible token Vault receivers
+               
                 ownerCapability.borrow<&{FungibleToken.Receiver}>() != nil: 
                     "Owner's Receiver Capability is invalid!"
                 beneficiaryCapability.borrow<&{FungibleToken.Receiver}>() != nil: 
                     "Beneficiary's Receiver Capability is invalid!" 
+                    
             }
 
             self.forSale <- MyWArt.createEmptyCollection()
@@ -175,11 +180,6 @@ pub contract MyWMarket {
             return self.forSale.getIDs()
         }
 
-        pub fun borrowArt(id: UInt64): &MyWArt.NFT? {
-            let ref = self.forSale.borrowArt(id: id)
-            return ref
-        }
-
         // If the sale collection is destroyed, 
         // destroy the tokens that are for sale inside of it
         destroy() {
@@ -187,8 +187,23 @@ pub contract MyWMarket {
         }        
     }
 
-    pub fun createSaleCollection(ownerCapability: Capability, beneficiaryCapability: Capability, cutPercentage: UFix64): @SaleCollection {
+    pub fun createEmptySaleCollection(ownerCapability: Capability, beneficiaryCapability: Capability, cutPercentage: UFix64): @SaleCollection {
         return <- create SaleCollection(ownerCapability: ownerCapability, beneficiaryCapability: beneficiaryCapability, cutPercentage: cutPercentage)
     }
 
+    init() {
+        
+        // TODO: let admin change the rate
+        self.DefaultCutPercentage = 0.015
+        
+        // TODO: let admin change the address
+        self.DefaultBeneficiaryAddress = self.account.address
+
+        // Default paths
+        self.MyWSaleCollectionPath = /storage/MyWSaleCollection
+        self.MyWSalePublicPath = /public/MyWSalePublic
+
+    } 
+    
+    
 }

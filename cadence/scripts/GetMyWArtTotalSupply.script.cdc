@@ -4,5 +4,7 @@ import MyWArt from "../contracts/MyWArt.cdc"
 // Number of moments minted from MyWArt contract
 
 pub fun main(): UInt64 {
+
     return MyWArt.totalSupply
+    
 }

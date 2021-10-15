@@ -1,6 +1,6 @@
 export const LIST_SALE_COLLECTION = `
     import MyMarketplaceContract from 0xMyMarketplace
-    import MyWorldContract from 0xMyWorld
+    import MyWorldContract from 0xMyWContractorld
     
     pub fun main(address: Address): {UInt64: MyWorldContract.MyArtData} {
     let account = getAccount(address)

@@ -1,11 +1,18 @@
 export const CREATE_COLLECTION = `
-  import MyWorldContract from 0xMyWorld
-  
+  import MyWArt from 0xMyWArtContract
+  import NonFungibleToken from 0xNonFungibleTokenContract  
+
   transaction {
+
     prepare(acct: AuthAccount) {
-      let collection <- MyWorldContract.createEmptyCollection()
-      acct.save<@MyWorldContract.Collection>(<-collection, to: MyWorldContract.CollectionStoragePath)
-      acct.link<&{MyWorldContract.CollectionPublic}>(MyWorldContract.CollectionPublicPath, target: MyWorldContract.CollectionStoragePath)
+
+      let collection <- MyWArt.createEmptyCollection()
+      acct.save<@MyWArt.Collection>(<-collection, to: MyWArt.MyWArtCollectionStoragePath)
+
+      acct.link<&{NonFungibleToken.CollectionPublic}>(MyWArt.MyWArtCollectionPublicPath, target: MyWArt.MyWArtCollectionStoragePath)
+
+      acct.link<&{MyWArt.Data}>(MyWArt.MyWArtDataPublicPath, target: MyWArt.MyWArtCollectionStoragePath)
+
     }
   }
 `

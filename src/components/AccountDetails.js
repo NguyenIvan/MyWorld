@@ -6,7 +6,7 @@ import './AccountDetails.css'
 
 export default function Wallet() {
   const { user, logOut } = useAuth()
-  const { balance, createFUSDVault } = useUser()
+  const { balance, createMyWVault } = useUser()
 
   return (
     <div className="wallet__popup">
@@ -14,12 +14,12 @@ export default function Wallet() {
         👛 {user?.addr}
       </div>
       {!balance ?
-        <div className="btn btn-small" onClick={() => createFUSDVault()}>
-          ⚠️ Enable FUSD
+        <div className="btn btn-small" onClick={() => createMyWVault()}>
+          ⚠️ Enable MyW Token
         </div>
         :
         <div className="wallet__item">
-          💰 FUSD: {balance.slice(0, -6)} <a style={{ color: "white" }} href="https://youtu.be/q8vcEGe95js">(Get FUSD)</a>
+          💰 MyW: {balance.slice(0, -6)} <a style={{ color: "white" }} href="https://youtu.be/q8vcEGe95js">(Get Tokens)</a>
         </div>
       }
       <div className="btn btn-small" onClick={() => logOut()}>👋 Logout</div>

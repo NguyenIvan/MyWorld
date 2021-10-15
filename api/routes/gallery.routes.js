@@ -1,19 +1,19 @@
 import { findAll, findOne, create, deleteOne } from "../controllers/myworld.controller.js";
 import express from "express";
-import {validator, myWArtValidation} from "../controllers/validator.middleware.js";
+import {validator, saleItemValidation} from "../controllers/validators.middleware.js";
 
 const galleryRouter = express.Router()
 
 // Retrieve all 
-galleryRouter.get("/", findAll);
+galleryRouter.get("/gallery", findAll);
 
 // Retrieve a single item with id
-galleryRouter.get("/:id", findOne);
+galleryRouter.get("/gallery:id", findOne);
 
 // New  MyWArt for Sale
-galleryRouter.post("/", myWArtValidation, validator, create)
+galleryRouter.post("/gallery", saleItemValidation, validator, create)
 
 // Delete
-galleryRouter.delete("/:id", deleteOne)
+galleryRouter.delete("/gallery/:id", deleteOne)
 
 export default galleryRouter;

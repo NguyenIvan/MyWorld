@@ -3,19 +3,19 @@ import { http } from "./myworld.utils";
 class GalleryDataClass {
   
   getAll() {
-    return http.get("/");
+    return http.get("gallery/");
   }
 
   get(id) {
-    return http.get(`/${id}`);
+    return http.get(`gallery/${id}`);
   }
 
   create(data) {
-    return http.post("/", data);
+    return http.post("gallery/", data);
   }
 
   delete(id) {
-    return http.delete(`/${id}`);
+    return http.delete(`gallery/${id}`);
   }
 
 }

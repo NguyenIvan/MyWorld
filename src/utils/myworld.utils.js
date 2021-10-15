@@ -1,14 +1,5 @@
 import axios from "axios";
-
-const importAll = (r)  => {
-    return r.keys().map(r)
-  };
-
-const images = importAll(require.context('../../public/arts/', false, /\.(png|jpe?g|svg)$/));
-
-const getRandomImgSrc = () => { 
-    return images[Math.floor(Math.random() * images.length)].default
-};
+import Validator from 'fastest-validator'
 
 const http = axios.create({
   baseURL: "http://very:5000/api/v1",
@@ -17,4 +8,25 @@ const http = axios.create({
   }
 });
 
-export {http, getRandomImgSrc};
+const v = new Validator();
+
+const schemaMyWArt = {
+
+    name: {type: "string", min: 3, max: 255},
+    price: { type: "number", positive: true, integer: false },
+    description: { type: "string", min: 3, max: 255 },
+    uri: {
+        type: "url",
+        messages: {
+            required: "An artwork must be uploaded",
+            url: "Url is not in correct format"
+
+        }
+    }
+
+}
+const checkMyWArt = v.compile(schemaMyWArt)
+
+
+export {http, checkMyWArt };
+

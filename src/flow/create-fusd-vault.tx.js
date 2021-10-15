@@ -1,6 +1,6 @@
 export const CREATE_FUSD_VAULT = `
-  import FungibleToken from 0xFungibleToken
-  import FUSD from 0xFUSD
+  import FungibleToken from 0xFungibleTokenContract
+  import FUSD from 0xFUSDContract
 
   transaction {
     prepare(signer: AuthAccount) {

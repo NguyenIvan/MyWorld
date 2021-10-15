@@ -1,12 +1,29 @@
 export const DELETE_COLLECTION = `
-  import MyWorldContract from 0xMyWorld
+  import MyWArt from 0xMyWArtContract
 
-  transaction() {
-    prepare(acct: AuthAccount) {
-      let collectionRef <- acct.load<@MyWorldContract.Collection>(from: MyWorldContract.CollectionStoragePath)
+  transaction () {
+
+    let account: AuthAccount
+
+    prepare(acct: AuthAccount) { 
+
+      let collectionRef = acct.borrow<&MyWArt.Collection>(from: MyWArt.MyWArtCollectionStoragePath)
         ?? panic("Could not borrow collection reference")
-      destroy collectionRef
-      acct.unlink(MyWorldContract.CollectionPublicPath)
+      self.account = acct
     }
-  }
+
+    execute {
+
+      let collection <- self.account.load<@MyWArt.Collection>(from: MyWArt.MyWArtCollectionStoragePath)
+        ?? panic("Could not borrow collection reference")
+
+      destroy collection
+        
+      self.account.unlink(MyWArt.MyWArtCollectionPublicPath)
+
+      self.account.unlink(MyWArt.MyWArtDataPublicPath)
+
+    }
+
+  }  
 `

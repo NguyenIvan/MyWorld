@@ -10,6 +10,21 @@
             "name": "Launch Chrome against localhost",
             "url": "http://very:4000",
             "webRoot": "${workspaceFolder}"
+        },
+        {
+            "type": "pwa-node",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/cadence/test",
+            "name": "Debug Jest Tests",
+            "runtimeExecutable": "npm",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "args": ["run", "test"],
+            "protocol": "inspector",
+            "outFiles": [
+                "${workspaceFolder}/**/*.js"
+            ]
         }
     ]
 }

@@ -21,7 +21,8 @@ transaction(amount: UFix64, recipient: Address) {
         
         let vault <- self.minterRef.mintTokens(amount: amount)
 
-        self.vaultRef.deposit(from: <-(vault as! @FungibleToken.Vault) )
+        self.vaultRef.deposit(from: <- vault)
+        // self.vaultRef.deposit(from: <-(vault as! @FungibleToken.Vault) )
 
     }
 }

@@ -1,37 +1,38 @@
 export const PUT_MYART_FOR_SALE = `
-import MyWorldContract from 0xMyWorld
-import MyMarketplaceContract from 0xMyMarketplace
+import MyWArt from 0xMyWArtContract
+import NonFungibleToken from 0xNonFungibleTokenContract
+import MyWMarket from 0xMyWMarketContract
 
-transaction(myWorldAdmin: Address, myArtId: UInt64, wantPrice: UFix64) {
+transaction(artId: UInt64, wantPrice: UFix64) {
 
-    // let seller: AuthAccount
-    let saleRef: &{MyMarketplaceContract.SalePublic}
-    let collectionRef: &MyWorldContract.Collection
+    let collectionRef: &MyWArt.Collection
+    let saleRef: &MyWMarket.SaleCollection
 
-    prepare(seller: AuthAccount) {
+    prepare(acct: AuthAccount) {
+
+        self.collectionRef = acct.borrow<&MyWArt.Collection>(
+            from: MyWArt.MyWArtCollectionStoragePath
+        ) 
+            ?? panic(" Could not borrow reference to MyWArt private collection")
         
-        let adminAccount = getAccount(myWorldAdmin)
-        /* Sale Collection */
-        self.saleRef = adminAccount
-            .getCapability(MyMarketplaceContract.SaleCollectionPublicPath)
-            .borrow<&{MyMarketplaceContract.SalePublic}>() 
-                ?? panic("Cannot borrow reference")
-
-        /* Private Collection */
-        self.collectionRef = seller
-            .borrow<&MyWorldContract.Collection>
-            (from: MyWorldContract.CollectionStoragePath)
-                ?? panic("Cannot borrow reference")     
+        self.saleRef = acct.borrow<&MyWMarket.SaleCollection>(
+            from: MyWMarket.MyWSaleCollectionPath
+        )
+            ?? panic(" Could not borrow reference to MyWArt sale collection")
 
     }
 
     execute {
 
-        let myArt <- self.collectionRef.withdraw(withdrawID: myArtId)
-        let price = myArt.data.price /* Need to change the price */
-        self.saleRef.putForSale(token: <-myArt, wantPrice: wantPrice)
+        let nft <- self.collectionRef
+            .withdraw(withdrawID: artId) as! @MyWArt.NFT
+        
+        self.saleRef.listForSale(
+            token: <- nft,
+            price: wantPrice
+        )
 
     }
-    
+
 }
 `

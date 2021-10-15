@@ -9,6 +9,8 @@ pub contract MyWArt: NonFungibleToken {
 
     pub let MyWArtCollectionPublicPath: PublicPath
 
+    pub let MyWArtDataPublicPath: PublicPath
+    
     pub let MyWArtAdminPath: StoragePath
 
     pub let MinterCapabilityPrivatePath: PrivatePath
@@ -64,22 +66,43 @@ pub contract MyWArt: NonFungibleToken {
 
     }
 
-    pub resource Collection: NonFungibleToken.Provider, NonFungibleToken.Receiver, NonFungibleToken.CollectionPublic {
+    // Get more detail on MyWArt, should be move to cached db for more privacy
+    pub resource interface Data {
+
+        pub fun getDataCollection(): {UInt64: MyWArt.MyWArtData}
+
+    }
+
+    pub resource Collection: NonFungibleToken.Provider, NonFungibleToken.Receiver, NonFungibleToken.CollectionPublic, Data {
 
         pub var ownedNFTs: @{UInt64: NonFungibleToken.NFT}
 
+        // Minimize gas fee
+        pub var dataCollection: {UInt64: MyWArt.MyWArtData}        
+
         init () {
             self.ownedNFTs <- {}
+            self.dataCollection = {}
         }
 
         destroy() {
+
             destroy self.ownedNFTs
+
+        }
+
+        pub fun getDataCollection(): {UInt64: MyWArt.MyWArtData} {
+
+            return self.dataCollection
+
         }
 
         pub fun withdraw(withdrawID: UInt64): @NonFungibleToken.NFT
         {
             let token <- self.ownedNFTs.remove(key: withdrawID) 
                 ?? panic("Cannot withdraw: MyWArt does not exist in the collection")
+
+            self.dataCollection.remove(key: withdrawID)
  
             emit Withdraw(id: token.id, from:self.owner?.address)
 
@@ -94,7 +117,11 @@ pub contract MyWArt: NonFungibleToken {
 
             let id = token.id
 
+            let data = token.data
+
             let oldToken <- self.ownedNFTs[id] <- token
+            
+            self.dataCollection[id] = data
 
             if self.owner?.address != nil {
                 emit Deposit(id: id, to: self.owner?.address)
@@ -110,15 +137,6 @@ pub contract MyWArt: NonFungibleToken {
 
         pub fun borrowNFT(id: UInt64): &NonFungibleToken.NFT {
             return &self.ownedNFTs[id] as &NonFungibleToken.NFT
-        }
-
-        pub fun borrowArt(id: UInt64): &MyWArt.NFT? {
-            if self.ownedNFTs[id] != nil {
-                let ref = &self.ownedNFTs[id] as auth &NonFungibleToken.NFT
-                return ref as! &MyWArt.NFT
-            } else {
-                return nil
-            }
         }
 
     }
@@ -148,7 +166,12 @@ pub contract MyWArt: NonFungibleToken {
             return <-create Admin()
         }
 
-    }   
+    }
+
+    // TODO: disable this
+    // pub fun createMinterProxy(): @ MinterProxy {
+    //     return <- create MinterProxy()
+    // }
 
     pub resource interface MinterProxyPublic {
         pub fun mintMyWArt(data: MyWArtData, fee: @MyW.Vault): @NFT
@@ -195,6 +218,7 @@ pub contract MyWArt: NonFungibleToken {
         self.totalSupply = 0
         self.MyWArtCollectionStoragePath = /storage/MyWArtCollection
         self.MyWArtCollectionPublicPath = /public/MyWArtCollection
+        self.MyWArtDataPublicPath = /public/MyWArtDataPublicPath
         self.MinterProxyStoragePath = /storage/MyWArtMinterProxy
         self.MinterProxyPublicPath = /public/MyWArtMinterProxy
         self.MinterCapabilityPrivatePath = /private/MyWArtMinter
@@ -204,6 +228,9 @@ pub contract MyWArt: NonFungibleToken {
 
         // Create a public capability for the Collection
         self.account.link<&{NonFungibleToken.CollectionPublic}>(self.MyWArtCollectionPublicPath, target: self.MyWArtCollectionStoragePath)
+
+        // Create a public capability for Data
+        self.account.link<&{MyWArt.Data}>(self.MyWArtDataPublicPath, target: self.MyWArtCollectionStoragePath)
 
         self.MyWArtAdminPath = /storage/MyWArtAdmin
         // Put the Minter in storage

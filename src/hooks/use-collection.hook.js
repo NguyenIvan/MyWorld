@@ -14,17 +14,22 @@ export default function useCollection(user) {
   useEffect(() => {
     if (!user?.addr) return
     const checkCollection = async () => {
+      
       try {
+
         let res = await query({
           cadence: CHECK_COLLECTION,
           args: (arg, t) => [arg(user?.addr, t.Address)] /* this is where signers are passed as an argument */
         })
+
         setCollection(res)
         setLoading(false)
+
       } catch (err) {
         console.log(err)
         setLoading(false)
       }
+
     }
     checkCollection()
     //eslint-disable-next-line

@@ -1,15 +1,15 @@
 export const LIST_USER_MYARTS = `
-  import MyWorldContract from 0xMyWorld
+  import MyWArt from 0xMyWArtContract
 
-  pub fun main(addr: Address): {UInt64: MyWorldContract.MyArtData}? {
-    let account = getAccount(addr)
+  pub fun main(address: Address):  {UInt64: MyWArt.MyWArtData} {
+
+    let account = getAccount(address)
     
-    if let ref = account.getCapability<&{MyWorldContract.CollectionPublic}>(MyWorldContract.CollectionPublicPath)
-                .borrow() {
-                  let myArts = ref.listMyArts()
-                  return myArts
-                }
-    
-    return nil
+    let dataRef = account
+      .getCapability<&{MyWArt.Data}>(MyWArt.MyWArtDataPublicPath).borrow() ??
+        panic("Could not borrow a reference to NFT collection")
+
+    return dataRef.getDataCollection()
+
   }
 `

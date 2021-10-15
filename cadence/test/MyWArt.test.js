@@ -45,22 +45,25 @@ describe("MyWorld", () => {
     const contracts = [
       "NonFungibleToken",
       "MyW",
-      "MyWArt"
+      "MyWArt",
+      "MyWMarket"
     ]
     // emulator.setLogging(true)
-
-    const accountAddress = await getAccountAddress("MyWorldAdmin")
-    const addressMap = await myWTest.deployAll(contracts, accountAddress)
+    const seller = await getAccountAddress("Seller")
+    const admin = await getAccountAddress("MyWorldAdmin")
+    
+    const addressMap = await myWTest.deployAll(contracts, admin)
 
     const totalSupply = await myWTest.getMyWArtTotalSupply()
     expect (totalSupply).toEqual(0)
 
     await myWTest.createMyWMinter(addressMap)
     
+    await myWTest.setupMyWVault(addressMap, seller)
+    await myWTest.setupMyWVault(addressMap, admin)
+
     await myWTest.initMyWArtCollection(addressMap)
     
-    await myWTest.setupMyWVault(addressMap)
-
     const amount = 1000.00
     await myWTest.sendMyWToken(amount, addressMap)
 
@@ -71,6 +74,48 @@ describe("MyWorld", () => {
 
     const newID = await myWTest.getMyWArtTotalSupply()
     expect (newID).toEqual(1)
+
+  })
+
+  it("put one nft for sale", async () => {
+    const contracts = [
+      "NonFungibleToken",
+      "MyW",
+      "MyWArt",
+      "MyWMarket"
+    ]
+ 
+    const seller = await getAccountAddress("Seller")
+    const admin = await getAccountAddress("MyWorldAdmin")
+    const addressMap = await myWTest.deployAll(contracts, admin)
+
+    const totalSupply = await myWTest.getMyWArtTotalSupply()
+    expect (totalSupply).toEqual(0)
+
+    await myWTest.createMyWMinter(addressMap)
+    
+    // Setup MyWVault should be called before initMyWArtCollection
+    await myWTest.setupMyWVault(addressMap, seller)
+    await myWTest.setupMyWVault(addressMap, admin)
+
+    await myWTest.initMyWArtCollection(addressMap)
+    
+    const amount = 1000.00
+    await myWTest.sendMyWToken(amount, addressMap)
+
+    const balance = await myWTest.getMyWBalance(addressMap)
+    expect(Number(balance)).toEqual(amount)
+
+    await myWTest.mintMyWArt(addressMap)
+
+    const newID = await myWTest.getMyWArtTotalSupply()
+    expect (newID).toEqual(1)
+
+    const wantPrice = 2000.00
+    await myWTest.putMyWArtForSale(addressMap, newID, wantPrice)
+    const saleID = await myWTest.getSalePublicIDs(seller, admin)
+    
+    expect (saleID[0]).toEqual(newID) 
 
   })
 
