@@ -49,7 +49,7 @@ export const getMyWArtTotalSupply = async() => {
     return totalSupply
 }
 
-export const getSalePublicIDs = async(address, admin) => {
+export const getSalePublicIDs = async(address) => {
     const name = "GetSalePublicIDs.script"
     const args = [address]
     const salePublicIDs = await executeScript({name, args})
@@ -72,10 +72,9 @@ export const logIt = async(addressMap) => {
   await sendTransaction({name, signers, args, addressMap})
 }
 
-export const getMyWBalance = async(addressMap) => {
+export const getMyWBalance = async(addressMap, addr) => {
   const name = "GetMyWBalance.script"
-  const address = await getAccountAddress("Seller")
-  const args = [address]
+  const args = [addr]
   const balance = await executeScript({name, args, addressMap})
   return balance
 }
@@ -87,9 +86,8 @@ export const setupMyWVault = async(addressMap, addr) => {
   await sendTransaction({name, signers, args, addressMap})
 }
 
-export const sendMyWToken = async(amount, addressMap) => {
+export const sendMyWToken = async(amount, addressMap, recipient) => {
   const name = "SendMyWToken.txn"
-  const recipient = await getAccountAddress("Seller")
   const minter = await getAccountAddress("MyWorldAdmin")
   const args = [amount, recipient]
   const signers = [minter]
@@ -120,3 +118,10 @@ export const putMyWArtForSale = async(addressMap, artId, wantPrice) => {
   await sendTransaction({name, signers, args, addressMap})
 }
 
+// purchase art (artId) from seller
+export const purchaseMyWArt = async(addressMap, artId, buyer, seller) => {
+  const name = "PurchaseMyWArt.txn"
+  const args = [artId, seller]
+  const signers = [buyer]
+  await sendTransaction({name, signers, args, addressMap})
+}

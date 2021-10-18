@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { useInput } from '../hooks/use-input.hook'
 import { useUser } from '../providers/UserProvider'
+import { useAuth } from '../providers/AuthProvider'
 import "./MyArtCard.css"
 
 export default function MyArtCard({ myart, store }) {
@@ -9,9 +10,13 @@ export default function MyArtCard({ myart, store }) {
 
   const { id, name, price, uri } = myart
 
+  const { user } = useAuth();
+
   const owned = useMyarts.some(d => d?.id === myart?.id)
 
   const { value: want_price, bind: bindPrice, reset: resetPrice } = useInput(price.slice(0, -6));
+
+  const { value: seller_name, bind: bindArtist, reset: resetArtist } = useInput("Anonymous");
 
   const [sell, setSell] = useState(false);
 
@@ -24,6 +29,9 @@ export default function MyArtCard({ myart, store }) {
   const clickSell = () => {
 
     myart.want_price = want_price;
+    myart.seller_name = seller_name;
+    myart.seller_address = user.addr;
+    
     putForSale( myart );
     
   }
@@ -49,6 +57,10 @@ export default function MyArtCard({ myart, store }) {
             <div className="myart__form__item ">
               <label>Price</label>
               <input type="number" step=".01" {...bindPrice} />
+            </div>
+            <div className="myart__form__item ">
+              <label>Artist Name (optional)</label>
+              <input type="text" {...bindArtist} />
             </div>
             <div className="btn upload__btn btn-bg rounded" onClick={() => clickSell()}>Put for sale</div>
           </>

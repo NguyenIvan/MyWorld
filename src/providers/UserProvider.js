@@ -13,7 +13,7 @@ export default function UserProvider({ children }) {
   const { collection, createCollection, deleteCollection } = useCollection(user)
   const { data: balance, createMyWVault, getMyWBalance } = useMyW(user)
   const { data: saleItems, fetchGallery } = useGallery()
-  const { data: useMyarts, putForSale, buyMyWArt, mintMyWArt, queryMyWArtMintFee, testScript } = 
+  const { data: useMyarts, putForSale, purchaseMyWArt, mintMyWArt, queryMyWArtMintFee, testScript } = 
     useUserMyWArts(user, collection, getMyWBalance, fetchGallery)
   return (
     <UserContext.Provider
@@ -21,7 +21,7 @@ export default function UserProvider({ children }) {
         saleItems,
         useMyarts,
         putForSale,
-        buyMyWArt,
+        purchaseMyWArt,
         mintMyWArt,
         queryMyWArtMintFee,
         testScript,
