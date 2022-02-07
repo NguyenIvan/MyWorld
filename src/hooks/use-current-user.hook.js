@@ -19,5 +19,6 @@ export default function useCurrentUser() {
     }
   }, [])
 
-  return [user, user?.addr != null, tools]
+  // return [user, user?.addr != null, tools]
+  return [user, true, tools]
 }

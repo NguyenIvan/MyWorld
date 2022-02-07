@@ -1,6 +1,5 @@
 # My code
-old_code
-
+build
 # VSCode
 .vscode/*
 !.vscode/settings.json
